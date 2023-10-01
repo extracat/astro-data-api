@@ -3,6 +3,10 @@ const app = express();
 
 // Application-level middleware, routes, etc.
 
+app.get('/', function(req,res) {
+  res.send('Hello local world!');
+});
+
 const apiV1Routes = require('../routes/api-v1');
 const apiV2Routes = require('../routes/api-v2');
 
