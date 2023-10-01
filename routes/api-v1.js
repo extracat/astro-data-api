@@ -1,8 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+// API version
 router.get('/version', (req, res) => {
   res.json({ version: '1.0.0' });
+});
+
+// API test
+router.get('/delayed-response', (req, res) => {
+  setTimeout(() => {
+    res.json({ message: 'This response is delayed!' });
+  }, 5000); // задержка в 5 секунд
 });
 
 // Sample data
