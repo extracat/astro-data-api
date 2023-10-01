@@ -10,7 +10,7 @@ router.get('/version', (req, res) => {
 router.get('/delayed-response', (req, res) => {
   setTimeout(() => {
     res.json({ message: 'This response is delayed!' });
-  }, 9000); 
+  }, 10000); 
 });
 
 // Sample data
