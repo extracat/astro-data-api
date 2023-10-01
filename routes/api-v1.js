@@ -8,9 +8,13 @@ router.get('/version', (req, res) => {
 
 // API test
 router.get('/delayed-response', (req, res) => {
+  const start = Date.now();
+  
   setTimeout(() => {
-    res.json({ message: 'This response is delayed!' });
-  }, 9000); 
+    const duration = Date.now() - start; 
+    console.log(`API request processed in ${duration} milliseconds`); 
+    res.json({ message: 'This response is delayed!', duration: `${duration} milliseconds` });
+  }, 5000);
 });
 
 // Sample data
