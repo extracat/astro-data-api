@@ -10,7 +10,7 @@ router.get('/version', (req, res) => {
 router.get('/delayed-response', (req, res) => {
   setTimeout(() => {
     res.json({ message: 'This response is delayed!' });
-  }, 5000); // задержка в 5 секунд
+  }, 14000); 
 });
 
 // Sample data
