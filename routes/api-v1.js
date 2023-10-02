@@ -7,15 +7,13 @@ router.get('/version', (req, res) => {
 });
 
 // API test
-router.get('/delayed-response', (req, res) => {
-  const start = Date.now();
-  
+router.get('/delayed-response/:timeout', (req, res) => {
+  const timeout = parseInt(req.params.timeout);
   setTimeout(() => {
-    const duration = Date.now() - start; 
-    console.log(`API request processed in ${duration} milliseconds`); 
-    res.json({ message: 'This response is delayed!', duration: `${duration} milliseconds` });
-  }, 5000);
+    res.json({ message: `This response is delayed for ${timeout} milliseconds!`});
+  }, timeout);
 });
+
 
 // Sample data
 const planets = [

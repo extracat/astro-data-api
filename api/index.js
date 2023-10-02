@@ -1,12 +1,21 @@
 const express = require('express');
 const app = express();
 
-// Application-level middleware, routes, etc.
+///////// Application-level middleware /////////
 
-app.get('/', function(req,res) {
-  res.send('Hello local world!');
+// Logging of response time
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+      const duration = Date.now() - start;
+      console.log(`Chronometer: Request to ${req.path} took ${duration}ms`);
+  });
+  next();
 });
 
+///////// End of middleware block /////////
+
+// Main application routes
 const apiV1Routes = require('../routes/api-v1');
 const apiV2Routes = require('../routes/api-v2');
 
