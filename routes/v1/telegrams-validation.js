@@ -1,7 +1,7 @@
 const { check, param } = require('express-validator');
 const { validationResult } = require('express-validator');
 
-const allowedFields = ['message', 'timestamp'];
+const allowedFields = ['title', 'body', 'timestamp'];
 
 // Validation schemas
 
@@ -30,7 +30,8 @@ const telegramRequiredFields = [
 const telegramIdValidator = [
   param('id')
     .exists().withMessage('ID is required')
-    .isLength({ min: 0, max: 1000 }).withMessage('ID must be no longer than 1000 characters')
+    .isNumeric().withMessage('ID must be a number')
+    .isLength({ min: 0, max: 20 }).withMessage('ID must be no longer than 20 characters')
 ];
 
 exports.telegramValidatorsPOST = [
