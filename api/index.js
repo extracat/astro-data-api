@@ -2,21 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
-const allowedOrigins = [
-  '*',
-  'http://domain1.com',
-  'http://domain2.com',
-  'your mobile app identifier',
-];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://mast-next.vercel.app',
+    'https://mast-next-git-develop-extracat.vercel.app'
+  ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // allowed methods
   credentials: false, // if don't need cookies
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
