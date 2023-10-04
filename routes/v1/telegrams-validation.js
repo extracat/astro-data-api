@@ -1,15 +1,20 @@
 const { check, param } = require('express-validator');
 const { validationResult } = require('express-validator');
 
-const allowedFields = ['title', 'body', 'timestamp'];
+const allowedFields = ['title', 'body'];
 
 // Validation schemas
 
 const telegramDataValidator = [
-  check('message')
+  check('title')
     .optional()
-    .isString().withMessage('Message must be a string')
-    .isLength({ min: 0, max: 100000 }).withMessage('Message must be no longer than 100000 characters'),
+    .isString().withMessage('Title must be a string')
+    .isLength({ min: 0, max: 1000 }).withMessage('Title must be no longer than 1000 characters'),
+
+  check('body')
+    .optional()
+    .isString().withMessage('Body must be a string')
+    .isLength({ min: 0, max: 100000 }).withMessage('Body must be no longer than 100000 characters'),
 
   check('timestamp')
     .optional()
@@ -19,18 +24,17 @@ const telegramDataValidator = [
 ];
 
 const telegramRequiredFields = [
-  check('message')
-    .not().isEmpty().withMessage('Message is required'),
+  check('title')
+    .not().isEmpty().withMessage('Title is required'),
 
-  check('timestamp')
-    .not().isEmpty().withMessage('Timestamp is required'),
-
+  check('body')
+    .not().isEmpty().withMessage('Body is required'),    
 ];
 
 const telegramIdValidator = [
   param('id')
     .exists().withMessage('ID is required')
-    .isNumeric().withMessage('ID must be a number')
+    .isString().withMessage('ID must be a string')
     .isLength({ min: 0, max: 20 }).withMessage('ID must be no longer than 20 characters')
 ];
 
@@ -45,10 +49,15 @@ exports.telegramValidatorsGET = [
 
 exports.telegramValidatorsPUT = [
   ...telegramIdValidator,
+  ...telegramRequiredFields,
   ...telegramDataValidator
 ];
 
-exports.telegramValidatorsPATCH = exports.telegramValidatorsPUT; 
+exports.telegramValidatorsPATCH = [
+  ...telegramIdValidator,
+  ...telegramDataValidator
+];
+
 exports.telegramValidatorsDELETE = exports.telegramValidatorsGET; 
 
 
@@ -57,18 +66,18 @@ exports.telegramValidatorsDELETE = exports.telegramValidatorsGET;
 // Validation errors handler in all these routes
 exports.validationErrorHandler = function validationErrorHandler(req, res, next) {
 
-  // Return error id validation fails
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
   // Check if all fields are allowed
   const invalidFields = Object.keys(req.body).filter(field => !allowedFields.includes(field));
   if (invalidFields.length > 0) {
     return res.status(400).json({ errors: `Invalid field(s): ${invalidFields.join(', ')}` });
   }
 
+  // Return error id validation fails
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  
   next();
 };
 

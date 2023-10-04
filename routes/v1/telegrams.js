@@ -14,6 +14,26 @@ const { telegramValidatorsPOST,
 let telegrams = []; 
 
 
+////////////////////
+////    POST    ////
+////////////////////
+router.post('/telegrams', telegramValidatorsPOST, validationErrorHandler, (req, res) => {
+
+  const newTelegram = {
+    id: Date.now().toString(),
+    title: req.body.title,
+    body: req.body.body,
+    timestamp: new Date().toISOString(), 
+  };
+  
+  telegrams.push(newTelegram);
+  res.status(201).json(newTelegram);
+});
+
+
+////////////////////
+////    GET     ////
+////////////////////
 router.get('/telegrams', (req, res) => {
   res.json(telegrams);
 });
@@ -27,32 +47,41 @@ router.get('/telegrams/:id', telegramValidatorsGET, validationErrorHandler,  (re
   }
 });
 
-router.post('/telegrams', telegramValidatorsPOST, validationErrorHandler, (req, res) => {
-  const newTelegram = { id: Date.now().toString(), ...req.body };
-  telegrams.push(newTelegram);
-  res.status(201).json(newTelegram);
-});
-
+////////////////////
+////    PUT     ////
+////////////////////
 router.put('/telegrams/:id', telegramValidatorsPUT, validationErrorHandler, (req, res) => {
   const index = telegrams.findIndex(t => t.id === req.params.id);
   if (index !== -1) {
-    telegrams[index] = { id: req.params.id, ...req.body };
+    const updatedTelegram = { ...req.body };
+    updatedTelegram.id = telegrams[index].id; // сохраняем оригинальный id
+    updatedTelegram.timestamp = telegrams[index].timestamp; // сохраняем оригинальный timestamp
+    telegrams[index] = updatedTelegram;
     res.json(telegrams[index]);
   } else {
     res.status(404).send('Telegram not found');
   }
 });
 
+////////////////////
+////   PATCH    ////
+////////////////////
 router.patch('/telegrams/:id', telegramValidatorsPATCH, validationErrorHandler, (req, res) => {
   const index = telegrams.findIndex(t => t.id === req.params.id);
   if (index !== -1) {
-    telegrams[index] = { ...telegrams[index], ...req.body };
+    const updatedTelegram = { ...telegrams[index], ...req.body };
+    updatedTelegram.id = telegrams[index].id; // сохраняем оригинальный id
+    updatedTelegram.timestamp = telegrams[index].timestamp; // сохраняем оригинальный timestamp
+    telegrams[index] = updatedTelegram;
     res.json(telegrams[index]);
   } else {
     res.status(404).send('Telegram not found');
   }
 });
 
+////////////////////
+////   DELETE   ////
+////////////////////
 router.delete('/telegrams/:id', telegramValidatorsDELETE, validationErrorHandler, (req, res) => {
   const index = telegrams.findIndex(t => t.id === req.params.id);
   if (index !== -1) {
