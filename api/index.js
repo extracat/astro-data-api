@@ -3,6 +3,7 @@ const cors = require('cors');
 const app = express();
 
 const allowedOrigins = [
+  '*',
   'http://domain1.com',
   'http://domain2.com',
   'your mobile app identifier',
