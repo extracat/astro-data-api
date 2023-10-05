@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { check } = require('express-validator');
-const { validationResult } = require('express-validator');
-const { validationErrorHandler } = require('./telegrams-validation');
+const { find } = require('../../controllers/telegramsController')
+//const { check } = require('express-validator');
+//const { validationResult } = require('express-validator');
+const { validationErrorHandler } = require('./telegramsValidation');
 const { telegramValidatorsPOST,
         telegramValidatorsGET,
         telegramValidatorsPUT,
         telegramValidatorsPATCH,
         telegramValidatorsDELETE,                
-      } = require('./telegrams-validation');
+      } = require('./telegramsValidation');
 
 
 let telegrams = []; 
@@ -35,6 +36,7 @@ router.post('/telegrams', telegramValidatorsPOST, validationErrorHandler, (req, 
 ////    GET     ////
 ////////////////////
 router.get('/telegrams', (req, res) => {
+  find()
   res.json(telegrams);
 });
 

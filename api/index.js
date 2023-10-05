@@ -16,7 +16,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-
 ///////// Application-level middleware /////////
 
 // Logging of response time
