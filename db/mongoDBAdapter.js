@@ -8,9 +8,8 @@ class MongoDBAdapter extends Database {
   }
 
   async connect() {
-    this.client = new MongoClient(this.connectionString, { useNewUrlParser: true, useUnifiedTopology: true });
+    this.client = new MongoClient(this.connectionString);
     await this.client.connect();
-    console.log('Connected to MongoDB');
   }
 
   async find(collection, query) {

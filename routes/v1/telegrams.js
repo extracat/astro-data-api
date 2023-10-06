@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { find } = require('../../controllers/telegramsController')
-//const { check } = require('express-validator');
-//const { validationResult } = require('express-validator');
+
 const { validationErrorHandler } = require('./telegramsValidation');
 const { telegramValidatorsPOST,
         telegramValidatorsGET,
@@ -11,8 +9,8 @@ const { telegramValidatorsPOST,
         telegramValidatorsDELETE,                
       } = require('./telegramsValidation');
 
-
-let telegrams = []; 
+// Controllers
+const controller = require('../../controllers/telegramsController')
 
 
 ////////////////////
@@ -36,17 +34,21 @@ router.post('/telegrams', telegramValidatorsPOST, validationErrorHandler, (req, 
 ////    GET     ////
 ////////////////////
 router.get('/telegrams', (req, res) => {
-  find()
-  res.json(telegrams);
+  controller.find()
+  .then(data => res.json(data))
+  .catch(error => console.error(error)); 
 });
 
 router.get('/telegrams/:id', telegramValidatorsGET, validationErrorHandler,  (req, res) => {
-  const telegram = telegrams.find(t => t.id === req.params.id);
-  if (telegram) {
-    res.json(telegram);
-  } else {
-    res.status(404).send('Telegram not found');
-  }
+  controller.findOne(req.params.id)
+  .then(data => {
+    if (data) {
+      res.json(data);
+    } else {
+      res.status(404).send('Telegram not found');
+    }
+  })
+  .catch(error => console.error(error)); 
 });
 
 ////////////////////
