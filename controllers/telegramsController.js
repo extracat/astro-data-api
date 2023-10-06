@@ -12,7 +12,7 @@ function sleep(ms) {
 module.exports.find = async function () { 
   try {
     const db = new MongoDBAdapter(uri);
-    console.log("start");
+    console.log("start>", uri);
     await db.connect();
     console.log("connected");
     return await db.find('telegrams', {});
