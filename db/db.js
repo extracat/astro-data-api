@@ -2,6 +2,10 @@ class Database {
   async connect() {
     throw new Error('Method not implemented');
   }
+  
+  async close() {
+    throw new Error('Method not implemented');
+  }
 
   async find(collection, query) {
     throw new Error('Method not implemented');

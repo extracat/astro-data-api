@@ -1,6 +1,8 @@
 const { ObjectId } = require('mongodb');
-const MongoDBAdapter = require('../db/mongoDBAdapter');
-const uri = process.env.MONGODB_URI
+const databaseAdapter = require('../db/mongoDBAdapter');
+
+const uri = process.env.MONGODB_URI;
+const db = new databaseAdapter(uri);
 
 // Just to make pause
 function sleep(ms) {
@@ -11,23 +13,21 @@ function sleep(ms) {
 
 module.exports.find = async function () { 
   try {
-    const db = new MongoDBAdapter(uri);
-    console.log("start>", uri);
     await db.connect();
-    console.log("connected");
     return await db.find('telegrams', {});
     
   } catch (error) {
-    console.error(error);
+    console.error("Controller Error: ", error);
     throw error;
-  }
+  } finally {
+    //await db.close();
+  } 
+
 };
 
 module.exports.findOne = async function (id) { 
   try {
-    const db = new MongoDBAdapter(uri);
     await db.connect();
-
     let filter = {};
     if (ObjectId.isValid(id)) {
       filter._id = new ObjectId(id);
@@ -37,7 +37,9 @@ module.exports.findOne = async function (id) {
     return await db.findOne('telegrams', filter);
     
   } catch (error) {
-    console.error(error);
+    console.error("Controller Error: ", error);
     throw error;
-  }
+  } finally {
+    //await db.close();
+  } 
 };

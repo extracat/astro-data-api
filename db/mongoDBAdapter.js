@@ -2,14 +2,26 @@ const { MongoClient } = require('mongodb');
 const Database = require('./db');
 
 class MongoDBAdapter extends Database {
+
   constructor(connectionString) {
     super();
     this.connectionString = connectionString;
   }
 
   async connect() {
+
+    if (this.client) {
+      console.log('MongoDBAdapter: Using cached database instance');
+    } else {
+      this.client = new MongoClient(this.connectionString);
+      await this.client.connect();
+      console.log('MongoDBAdapter: Connected to database');
+    }
+  }
+
+  async close() {
     this.client = new MongoClient(this.connectionString);
-    await this.client.connect();
+    await this.client.close();
   }
 
   async find(collection, query) {
