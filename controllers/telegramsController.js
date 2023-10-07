@@ -1,5 +1,4 @@
-const databaseAdapter = require('../db/mongoDBAdapter');
-const db = new databaseAdapter();
+const db = new (require('../db/mongoDBAdapter'))();
 
 // Tool: just to make pause somewhere
 function sleep(ms) {
