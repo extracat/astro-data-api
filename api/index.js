@@ -29,6 +29,21 @@ app.use((req, res, next) => {
   next();
 });
 
+// Throttling (delay) for debug purposes
+app.use((req, res, next) => {
+
+  if (process.env.THROTTLING === 'TRUE') {
+    const delayTime = Number(process.env.THROTTLING_DELAY) || 1000; 
+    app.use((req, res, next) => {
+      setTimeout(() => {
+        next();
+      }, delayTime);
+    });
+  }
+
+});
+
+
 app.use(express.json());
 
 ///////// End of middleware block /////////

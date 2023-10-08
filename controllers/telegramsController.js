@@ -1,10 +1,5 @@
 const db = new (require('../db/mongoDBAdapter'))();
 
-// Tool: just to make pause somewhere
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 //////////////////////////////////////////
 
 module.exports.find = async function () { 
