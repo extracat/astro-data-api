@@ -54,7 +54,7 @@ class MongoDBAdapter extends Database {
 
   async find(collection, query) {
     query = preprocessQuery(query);
-    return await this.client.db().collection(collection).find(query).toArray();
+    return await this.client.db().collection(collection).find(query).sort({ _id: -1 }).toArray();
   }
 
   async findOne(collection, query) {
