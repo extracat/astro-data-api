@@ -20,14 +20,16 @@ app.use(cors(corsOptions));
 ///////// Application-level middleware /////////
 
 // Logging of response time
-app.use((req, res, next) => {
-  const start = Date.now();
-  res.on('finish', () => {
-      const duration = Date.now() - start;
-      console.log(`Chronometer: Request to ${req.path} took ${duration}ms`);
+if (process.env.CHRONOMETER === 'TRUE') {
+  app.use((req, res, next) => {
+    const start = Date.now();
+    res.on('finish', () => {
+        const duration = Date.now() - start;
+        console.log(`Chronometer: Request to ${req.path} took ${duration}ms`);
+    });
+    next();
   });
-  next();
-});
+}
 
 // Throttling (delay) for debug purposes
 if (process.env.THROTTLING === 'TRUE') {
@@ -38,9 +40,6 @@ if (process.env.THROTTLING === 'TRUE') {
     }, delayTime);
   });
 }
-
-
-
 
 app.use(express.json());
 
