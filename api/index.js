@@ -30,18 +30,16 @@ app.use((req, res, next) => {
 });
 
 // Throttling (delay) for debug purposes
-app.use((req, res, next) => {
+if (process.env.THROTTLING === 'TRUE') {
+  const delayTime = Number(process.env.THROTTLING_DELAY) || 1000; 
+  app.use((req, res, next) => {
+    setTimeout(() => {
+      next();
+    }, delayTime);
+  });
+}
 
-  if (process.env.THROTTLING === 'TRUE') {
-    const delayTime = Number(process.env.THROTTLING_DELAY) || 1000; 
-    app.use((req, res, next) => {
-      setTimeout(() => {
-        next();
-      }, delayTime);
-    });
-  }
 
-});
 
 
 app.use(express.json());
