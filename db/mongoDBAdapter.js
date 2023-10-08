@@ -41,7 +41,9 @@ class MongoDBAdapter extends Database {
     if (!this.client) { 
       this.client = new MongoClient(this.connectionString);
       await this.client.connect();
-      console.log('MongoDBAdapter: Connected to database');
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('MongoDBAdapter: Connected to database');
+      }
     }
   }
 
