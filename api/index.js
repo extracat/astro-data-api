@@ -7,6 +7,8 @@ const corsOptions = {
   origin: [
     'http://localhost:3000',
     'http://localhost:3001',
+    'https://astro-data-net.vercel.app',
+    'https://astro-data-net-git-develop-extracat.vercel.app',
     'https://mast-next.vercel.app',
     'https://mast-next-git-develop-extracat.vercel.app'
   ],
