@@ -1,7 +1,19 @@
 const { check, param } = require('express-validator');
 const { validationResult } = require('express-validator');
 
-const allowedFields = ['title', 'body'];
+const allowedFields = [
+  'title',
+  'body',
+  'coordinates',
+  'event_datetime',
+  'magnitude',
+  'limiting_magnitude',
+  'filter',
+  'reporters',
+  'observatories',
+  'categories',
+  'references'  
+];
 
 // Validation schemas
 
@@ -16,11 +28,29 @@ const telegramDataValidator = [
     .isString().withMessage('Body must be a string')
     .isLength({ min: 0, max: 100000 }).withMessage('Body must be no longer than 100000 characters'),
 
-  check('timestamp')
+  check('event_datetime')
     .optional()
     .isISO8601().withMessage('Timestamp must be a valid ISO 8601 date string'),
 
-  // ...другие правила валидации для других полей...
+  check('coordinates')
+    .optional()
+    .isLength({ min: 0, max: 1000 }).withMessage('Must be no longer than 1000 characters'),
+  
+  check('magnitude')
+    .optional()
+    .isFloat().withMessage('Body must be a float number')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 10 characters'),
+
+  check('limiting_magnitude')
+    .optional()
+    .isFloat().withMessage('Body must be a float number')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 10 characters'),
+
+  check('filter')
+    .optional()
+    .isString().withMessage('Filter must be a string')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 100 characters'),
+
 ];
 
 const telegramRequiredFields = [
@@ -49,15 +79,10 @@ exports.telegramValidatorsGET = [
 
 exports.telegramValidatorsPUT = [
   ...telegramIdValidator,
-  ...telegramRequiredFields,
   ...telegramDataValidator
 ];
 
-exports.telegramValidatorsPATCH = [
-  ...telegramIdValidator,
-  ...telegramDataValidator
-];
-
+exports.telegramValidatorsPATCH = exports.telegramValidatorsPUT;
 exports.telegramValidatorsDELETE = exports.telegramValidatorsGET; 
 
 
