@@ -1,5 +1,11 @@
 const { check, param } = require('express-validator');
 const { validationResult } = require('express-validator');
+import { 
+  Telegram, 
+  Observatory, 
+  Reporter, 
+  Author, 
+  Coordinate } from '../../models/Telegram'; 
 
 const allowedFields = [
   'title',
@@ -38,18 +44,37 @@ const telegramDataValidator = [
   
   check('magnitude')
     .optional()
-    .isFloat().withMessage('Body must be a float number')
-    .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 10 characters'),
-
+    .isFloat().withMessage('Body must be a float number'),
+    
   check('limiting_magnitude')
     .optional()
-    .isFloat().withMessage('Body must be a float number')
-    .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 10 characters'),
-
+    .isFloat().withMessage('Body must be a float number'),
+    
   check('filter')
     .optional()
     .isString().withMessage('Filter must be a string')
     .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 100 characters'),
+
+  check('reporters')
+    .optional()
+    .isArray().withMessage('Reporters must be an array')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
+
+  check('observatories')
+    .optional()
+    .isArray().withMessage('Observatories must be an array')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
+
+  check('categories')
+    .optional()
+    .isArray().withMessage('Categories must be an array')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
+
+  check('references')
+    .optional()
+    .isArray().withMessage('References must be an array')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
+
 
 ];
 
