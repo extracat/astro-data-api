@@ -1,11 +1,11 @@
-const { check, param } = require('express-validator');
+const { check, param, body } = require('express-validator');
 const { validationResult } = require('express-validator');
-import { 
+const { 
   Telegram, 
   Observatory, 
   Reporter, 
   Author, 
-  Coordinate } from '../../models/Telegram'; 
+  Coordinate } = require('../../models/Telegram'); 
 
 const allowedFields = [
   'title',
@@ -40,7 +40,24 @@ const telegramDataValidator = [
 
   check('coordinates')
     .optional()
+    .isObject().withMessage('Coordinates must be an object')
     .isLength({ min: 0, max: 1000 }).withMessage('Must be no longer than 1000 characters'),
+  
+  check('coordinates.ra').if(body('coordinates').exists())
+    .exists().withMessage('Coordinate RA is required')
+    .isObject().withMessage('Coordinate RA must be an object'),
+
+  check('coordinates.ra.value').if(body('coordinates').exists())
+    .exists().withMessage('Coordinate RA.value is required')
+    .isString().withMessage('Coordinate RA.value must be a string'),
+
+  check('coordinates.dec').if(body('coordinates').exists())
+    .exists().withMessage('Coordinate DEC is required')
+    .isObject().withMessage('Coordinate DEC must be an object'),
+
+  check('coordinates.dec.value').if(body('coordinates').exists())
+    .exists().withMessage('Coordinate DEC.value is required')
+    .isString().withMessage('Coordinate DEC.value must be a string'),
   
   check('magnitude')
     .optional()
@@ -58,23 +75,47 @@ const telegramDataValidator = [
   check('reporters')
     .optional()
     .isArray().withMessage('Reporters must be an array')
-    .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
+    .isLength({ min: 0, max: 150 }).withMessage('Array is too big'),
+
+  check('reporters.*')
+    .optional()
+    .isObject().withMessage('Reporter must be an object')
+    .isLength({ min: 0, max: 10000 }).withMessage('Must be no longer than 10000 characters'),
+
+  check('reporters.*.authors.*.email')
+    .optional()
+    .isEmail().withMessage('Must be an e-mail')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 100 characters'),
 
   check('observatories')
     .optional()
     .isArray().withMessage('Observatories must be an array')
     .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
 
+  check('observatories.*')
+    .optional()
+    .isObject().withMessage('Observatory must be an object')
+    .isLength({ min: 0, max: 1000 }).withMessage('Must be no longer than 1000 characters'),
+
   check('categories')
     .optional()
     .isArray().withMessage('Categories must be an array')
     .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
+
+  check('categories.*')
+    .optional()
+    .isString().withMessage('Categorie must be a string')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 100 characters'),
 
   check('references')
     .optional()
     .isArray().withMessage('References must be an array')
     .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
 
+  check('references.*')
+    .optional()
+    .isString().withMessage('References must be a string')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 100 characters'),
 
 ];
 
@@ -113,6 +154,8 @@ exports.telegramValidatorsDELETE = exports.telegramValidatorsGET;
 
 
 
+
+
 // Validation errors handler in all these routes
 exports.validationErrorHandler = function validationErrorHandler(req, res, next) {
 
@@ -130,6 +173,4 @@ exports.validationErrorHandler = function validationErrorHandler(req, res, next)
   
   next();
 };
-
-
 

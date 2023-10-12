@@ -1,4 +1,4 @@
-export class Telegram {
+class Telegram {
   constructor(data) {
       this._id = data._id;
       this.user_id = data.user_id;
@@ -21,7 +21,7 @@ export class Telegram {
   }
 }
 
-export class Observatory {
+class Observatory {
   constructor(data) {
       this.name = data.name;
       this.instrument = data.instrument;
@@ -30,7 +30,7 @@ export class Observatory {
 }
 
 
-export class Reporter {
+class Reporter {
   constructor(data) {
       this.organization = data.organization;
       this.authors = data.authors.map(author => new Author(author));
@@ -38,7 +38,7 @@ export class Reporter {
 }
 
 
-export class Author {
+class Author {
   constructor(data) {
       this.name = data.name;
       this.email = data.email;
@@ -46,10 +46,17 @@ export class Author {
 }
 
 
-export class Coordinate {
+class Coordinate {
   constructor(data) {
       this.value = data.value;
       this.error = data.error;
       this.error_units = data.error_units;
   }
 }
+
+module.exports = { 
+  Telegram, 
+  Observatory, 
+  Reporter, 
+  Author, 
+  Coordinate };
