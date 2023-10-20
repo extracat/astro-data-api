@@ -1,21 +1,15 @@
 const { check, param, body } = require('express-validator');
 const { validationResult } = require('express-validator');
-const { 
-  Telegram, 
-  Observatory, 
-  Reporter, 
-  Author, 
-  Coordinate } = require('../../models/Telegram'); 
 
 const allowedFields = [
+  'external_id',
   'title',
   'body',
-  'coordinates',
   'event_datetime',
-  'magnitude',
-  'limiting_magnitude',
-  'filter',
-  'reporters',
+  'band',
+  'coordinates',
+  'light_curve',
+  'authors',
   'observatories',
   'categories',
   'references'  
@@ -59,30 +53,31 @@ const telegramDataValidator = [
     .exists().withMessage('Coordinate DEC.value is required')
     .isString().withMessage('Coordinate DEC.value must be a string'),
   
-  check('magnitude')
+  check('light_curve')
     .optional()
-    .isFloat().withMessage('Body must be a float number'),
-    
-  check('limiting_magnitude')
-    .optional()
-    .isFloat().withMessage('Body must be a float number'),
-    
-  check('filter')
-    .optional()
-    .isString().withMessage('Filter must be a string')
-    .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 100 characters'),
+    .isArray().withMessage('Light curve must be an array')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
 
-  check('reporters')
+  check('light_curve.*')
     .optional()
-    .isArray().withMessage('Reporters must be an array')
-    .isLength({ min: 0, max: 150 }).withMessage('Array is too big'),
+    .isObject().withMessage('Light curve measurment must be an object')
+    .isLength({ min: 0, max: 1000 }).withMessage('Must be no longer than 1000 characters'),
 
-  check('reporters.*')
+  check('light_curve.*.datetime')
     .optional()
-    .isObject().withMessage('Reporter must be an object')
+    .isISO8601().withMessage('Light curve measurment datetime must be a valid ISO 8601 date string'),
+
+  check('authors')
+    .optional()
+    .isArray().withMessage('Authors must be an array')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
+
+  check('authors.*')
+    .optional()
+    .isObject().withMessage('Authors must be an object')
     .isLength({ min: 0, max: 10000 }).withMessage('Must be no longer than 10000 characters'),
 
-  check('reporters.*.authors.*.email')
+  check('authors.*.email')
     .optional()
     .isEmail().withMessage('Must be an e-mail')
     .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 100 characters'),
@@ -124,7 +119,10 @@ const telegramRequiredFields = [
     .not().isEmpty().withMessage('Title is required'),
 
   check('body')
-    .not().isEmpty().withMessage('Body is required'),    
+    .not().isEmpty().withMessage('Body is required'),   
+    
+  check('band')
+    .not().isEmpty().withMessage('Band is required'),
 ];
 
 const telegramIdValidator = [
