@@ -129,7 +129,7 @@ const telegramIdValidator = [
   param('id')
     .exists().withMessage('ID is required')
     .isString().withMessage('ID must be a string')
-    .isLength({ min: 0, max: 24 }).withMessage('ID must be no longer than 24 characters')
+    .isLength({ min: 9, max: 24 }).withMessage('ID must be 9 to 24 characters')
 ];
 
 exports.telegramValidatorsPOST = [
