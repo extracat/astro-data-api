@@ -49,8 +49,8 @@ function getQuery(id) {
   let query = {};
 
   // Check for string starting with "ADN" (case insensitive)
-  if (id.toLowerCase().startsWith("adn") && id.length < 24) {
-    query.id = id;
+  if (id.toUpperCase().startsWith("ADN") && id.length < 24) {
+    query.id = id.toUpperCase();
   } 
   // Checking for length specific to ObjectId
   else if (id.length === 24) {
