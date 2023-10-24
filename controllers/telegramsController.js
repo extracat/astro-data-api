@@ -85,7 +85,21 @@ module.exports.findOne = async function (id) {
   
   } catch (error) {
     console.error("Controller Error: ", error);
-    throw error;
+
+    if (error == "Error: Invalid ID format") {
+      return {
+        "errors": [{
+          "type": "field",
+          "value": id,
+          "msg": "Invalid ID format",
+          "path": "id",
+          "location": "params"
+        }]
+      };
+    } else {
+      throw error;
+    }
+    
   } 
 };
 
@@ -122,7 +136,20 @@ module.exports.delete = async function (id) {
   
   } catch (error) {
     console.error("Controller Error: ", error);
-    throw error;
+
+    if (error == "Error: Invalid ID format") {
+      return {
+        "errors": [{
+          "type": "field",
+          "value": id,
+          "msg": "Invalid ID format",
+          "path": "id",
+          "location": "params"
+        }]
+      };
+    } else {
+      throw error;
+    }
   } 
 };
 
@@ -134,7 +161,20 @@ module.exports.update = async function (id, data) {
   
   } catch (error) {
     console.error("Controller Error: ", error);
-    throw error;
+    
+    if (error == "Error: Invalid ID format") {
+      return {
+        "errors": [{
+          "type": "field",
+          "value": id,
+          "msg": "Invalid ID format",
+          "path": "id",
+          "location": "params"
+        }]
+      };
+    } else {
+      throw error;
+    }
   } 
 };
 
