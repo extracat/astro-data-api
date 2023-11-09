@@ -1,5 +1,6 @@
 require('dotenv').config({ path: '.env.local' });
 const express = require('express');
+const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
 
@@ -31,6 +32,11 @@ if (process.env.CHRONOMETER === 'TRUE') {
     });
     next();
   });
+}
+
+// Logging with morgan
+if (process.env.MORGAN === 'TRUE') {
+  app.use(morgan('dev'));
 }
 
 // Throttling (delay) for debug purposes
