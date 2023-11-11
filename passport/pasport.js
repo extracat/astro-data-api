@@ -1,4 +1,4 @@
-//require('dotenv').config({ path: '.env.local' });
+require('dotenv').config({ path: '.env.local' });
 const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;

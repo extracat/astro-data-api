@@ -1,4 +1,4 @@
-//require('dotenv').config({ path: '.env.local' });
+require('dotenv').config({ path: '.env.local' });
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
