@@ -14,7 +14,7 @@ async function getID() {
 
   console.log("Trying ID =", baseID); // <=== ////// DELETE ME ////////
   // Check base ID
-  if (!(await db.findOne('telegrams', { id: baseID }))) {
+  if (!(await db.findOne('telegrams', { adn_id: baseID }))) {
     return baseID;
   }
 
@@ -23,7 +23,7 @@ async function getID() {
     let currentID = baseID + alphabet[i];
 
     console.log("Trying ID =", currentID); // <=== ////// DELETE ME ////////
-    if (!(await db.findOne('telegrams', { id: currentID }))) {
+    if (!(await db.findOne('telegrams', { adn_id: currentID }))) {
       return currentID;
     }
   }
@@ -34,7 +34,7 @@ async function getID() {
       let doubleLetterID = baseID + alphabet[i] + alphabet[j];
 
       console.log("Trying ID =", doubleLetterID); // <=== ////// DELETE ME ////////
-      if (!(await db.findOne('telegrams', { id: doubleLetterID }))) {
+      if (!(await db.findOne('telegrams', { adn_id: doubleLetterID }))) {
         return doubleLetterID;
       }
     }
@@ -44,13 +44,13 @@ async function getID() {
   throw new Error("getID: Too many entries for this date!");
 }
 
-// Get the right query according ti ID type
+// Get the right query according to ID type
 function getQuery(id) {
   let query = {};
 
   // Check for string starting with "ADN" (case insensitive)
   if (id.toUpperCase().startsWith("ADN") && id.length < 24) {
-    query.id = id.toUpperCase();
+    query.adn_id = id.toUpperCase();
   } 
   // Checking for length specific to ObjectId
   else if (id.length === 24) {
@@ -107,18 +107,20 @@ module.exports.insert = async function (data) {
   try {
     await db.connect();
 
-    const finalData = data;
+    let finalData = {};
 
     try {
       const newID = await getID();
       console.log("Final ID =", newID);
-      finalData.id = newID;
+      finalData.adn_id = newID;
     } catch (error) {
       console.error(error);
       throw error;
     } 
 
     finalData.timestamp = new Date().toISOString();
+
+    finalData = {...finalData, ...data};
 
     console.log ("Now making request"); // <=== ////// DELETE ME ////////
     return await db.insert('telegrams', finalData);

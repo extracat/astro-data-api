@@ -3,6 +3,8 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
+const passport = require('../passport/pasport'); 
+
 
 const corsOptions = {
   origin: [
@@ -50,15 +52,18 @@ if (process.env.THROTTLING === 'TRUE') {
 }
 
 app.use(express.json());
+app.use(passport.initialize());
 
 ///////// End of middleware block /////////
 
 // Main application routes
 // V1 (Current version)
 const apiV1Routes_api = require('../routes/v1/api');
+const apiV1Routes_auth = require('../routes/v1/auth');
 const apiV1Routes_telegrams = require('../routes/v1/telegrams');
 
 app.use('/api/v1', apiV1Routes_api);
+app.use('/api/v1', apiV1Routes_auth);
 app.use('/api/v1', apiV1Routes_telegrams);
 
 // V2 (to be in the future)
