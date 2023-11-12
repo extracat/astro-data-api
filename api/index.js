@@ -1,3 +1,7 @@
+//
+// This file is the main starting point for express application.
+//
+
 require('dotenv').config({ path: '.env.local' });
 const express = require('express');
 const morgan = require('morgan');
@@ -5,7 +9,7 @@ const cors = require('cors');
 const app = express();
 const passport = require('../passport/pasport'); 
 
-
+// List of domains which are allowed to work with API
 const corsOptions = {
   origin: [
     'http://localhost:3000',

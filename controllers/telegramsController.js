@@ -1,3 +1,7 @@
+//
+// This file is a layer between the abstract database classes and routes handlers.
+//
+
 const db = new (require('../db/mongoDBAdapter'))();
 
 // Makeing Uniqe Human Readable ID 

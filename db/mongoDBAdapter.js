@@ -1,3 +1,7 @@
+//
+// This is MongoDB adapter. It provides the specific MongoDB functionality to the abstract common interface.
+//
+
 const { ObjectId } = require('mongodb');
 const { MongoClient } = require('mongodb');
 const Database = require('./db');
