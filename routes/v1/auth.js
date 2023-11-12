@@ -12,9 +12,8 @@ function newToken() {
   };
 
   const options = {
-      expiresIn: '1m',
-      issuer: 'astro-data-api',
-      subject: 'auth'
+      expiresIn: '1d',
+      subject: 'free_auth'
   };
 
   const secretKey = process.env.JWT_SECRET;

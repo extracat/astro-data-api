@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const apiVersion = '1.1.0';
+const apiVersion = '1.2.0';
 
 // API version
 router.get('/version', (req, res) => {
