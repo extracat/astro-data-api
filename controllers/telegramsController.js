@@ -1,7 +1,8 @@
 const db = new (require('../db/mongoDBAdapter'))();
 
-// Get current date YYMMDD
+// Makeing Uniqe Human Readable ID 
 async function getID() {
+  // Get current date YYMMDD
   const now = new Date();
   const year = now.getUTCFullYear().toString().slice(-2);
   const month = (now.getUTCMonth() + 1).toString().padStart(2, '0');
