@@ -20,10 +20,10 @@ module.exports.find = async function () {
 
 };
 
-module.exports.findOne = async function (id) { 
+module.exports.findOne = async function (query) { 
   try {
     await db.connect();
-    return await db.findOne( 'users', {_id: id} );
+    return await db.findOne( 'users', query );
   
   } catch (error) {
     console.error("Controller Error: ", error);
@@ -47,10 +47,10 @@ module.exports.insert = async function (data) {
   } 
 };
 
-module.exports.delete = async function (id) { 
+module.exports.delete = async function (query) { 
   try {
     await db.connect();
-    return await db.delete( 'users', getQuery(id) );
+    return await db.delete( 'users', query );
   
   } catch (error) {
     console.error("Controller Error: ", error);
@@ -58,11 +58,11 @@ module.exports.delete = async function (id) {
   } 
 };
 
-module.exports.update = async function (id, data) { 
+module.exports.update = async function (query, data) { 
   try {
     await db.connect();
 
-    return await db.update( 'users', getQuery(id), data );
+    return await db.update( 'users', query, data );
   
   } catch (error) {
     console.error("Controller Error: ", error);
