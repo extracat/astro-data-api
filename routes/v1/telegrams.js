@@ -1,3 +1,4 @@
+const passport = require('passport');
 const express = require('express');
 const router = express.Router();
 
@@ -16,10 +17,14 @@ const controller = require('../../controllers/telegramsController')
 ////////////////////
 ////    POST    ////
 ////////////////////
-router.post('/telegrams', telegramValidatorsPOST, validationErrorHandler, (req, res) => {  
-  controller.insert(req.body)
-  .then(data => res.status(201).json(data))
-  .catch(error => console.error(error)); 
+router.post('/telegrams', 
+  passport.authenticate('jwt', { session: false }), 
+  telegramValidatorsPOST, 
+  validationErrorHandler, 
+  (req, res) => {  
+    controller.insert(req.body)
+    .then(data => res.status(201).json(data))
+    .catch(error => console.error(error)); 
 });
 
 
@@ -47,46 +52,58 @@ router.get('/telegrams/:id', telegramValidatorsGET, validationErrorHandler,  (re
 ////////////////////
 ////    PUT     ////
 ////////////////////
-router.put('/telegrams/:id', telegramValidatorsPUT, validationErrorHandler, (req, res) => {
-  controller.update(req.params.id, req.body)
-  .then(data => {
-    if (data) {
-      res.status(200).json(data);
-    } else {
-      res.status(404).send('Telegram not found');
-    }
-  })
-  .catch(error => console.error(error)); 
+router.put('/telegrams/:id', 
+  passport.authenticate('jwt', { session: false }),
+  telegramValidatorsPUT, 
+  validationErrorHandler, 
+  (req, res) => {
+    controller.update(req.params.id, req.body)
+    .then(data => {
+      if (data) {
+        res.status(200).json(data);
+      } else {
+        res.status(404).send('Telegram not found');
+      }
+    })
+    .catch(error => console.error(error)); 
 });
 
 ////////////////////
 ////   PATCH    ////
 ////////////////////
-router.patch('/telegrams/:id', telegramValidatorsPATCH, validationErrorHandler, (req, res) => {
-  controller.update(req.params.id, req.body)
-  .then(data => {
-    if (data) {
-      res.status(200).json(data);
-    } else {
-      res.status(404).send('Telegram not found');
-    }
-  })
-  .catch(error => console.error(error)); 
+router.patch('/telegrams/:id', 
+  passport.authenticate('jwt', { session: false }),
+  telegramValidatorsPATCH, 
+  validationErrorHandler, 
+  (req, res) => {
+    controller.update(req.params.id, req.body)
+    .then(data => {
+      if (data) {
+        res.status(200).json(data);
+      } else {
+        res.status(404).send('Telegram not found');
+      }
+    })
+    .catch(error => console.error(error)); 
 });
 
 ////////////////////
 ////   DELETE   ////
 ////////////////////
-router.delete('/telegrams/:id', telegramValidatorsDELETE, validationErrorHandler, (req, res) => {
-  controller.delete(req.params.id)
-  .then(data => {
-    if (data) {
-      res.status(200).json(data);
-    } else {
-      res.status(404).send('Telegram not found');
-    }
-  })
-  .catch(error => console.error(error)); 
+router.delete('/telegrams/:id', 
+  passport.authenticate('jwt', { session: false }),
+  telegramValidatorsDELETE, 
+  validationErrorHandler, 
+  (req, res) => {
+    controller.delete(req.params.id)
+    .then(data => {
+      if (data) {
+        res.status(200).json(data);
+      } else {
+        res.status(404).send('Telegram not found');
+      }
+    })
+    .catch(error => console.error(error)); 
 });
 
 module.exports = router;
