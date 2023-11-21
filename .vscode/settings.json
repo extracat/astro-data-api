@@ -2,5 +2,6 @@
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 500,
   "javascript.suggestionActions.enabled": false,
-  "editor.lightbulb.enabled": false
+  "editor.lightbulb.enabled": false,
+  "workbench.colorTheme": "Monokai Pro"
 }
