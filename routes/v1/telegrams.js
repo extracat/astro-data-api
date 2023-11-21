@@ -1,6 +1,7 @@
 const passport = require('passport');
 const express = require('express');
 const router = express.Router();
+const { ObjectId } = require('mongodb');
 
 const { validationErrorHandler } = require('./telegramsValidation');
 const { telegramValidatorsPOST,
@@ -22,7 +23,14 @@ router.post('/telegrams',
   telegramValidatorsPOST, 
   validationErrorHandler, 
   (req, res) => {  
-    controller.insert(req.body)
+
+    const payload = req.user;
+
+    let finalData = {};
+    finalData.user_id = new ObjectId(payload.user_id);
+    finalData = {...finalData, ...req.body};
+
+    controller.insert(finalData)
     .then(data => res.status(201).json(data))
     .catch(error => console.error(error)); 
 });
