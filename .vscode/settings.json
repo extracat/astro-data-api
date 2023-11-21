@@ -1,0 +1,6 @@
+{
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 500,
+  "javascript.suggestionActions.enabled": false,
+  "editor.lightbulb.enabled": false
+}
