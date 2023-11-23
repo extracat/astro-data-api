@@ -14,9 +14,28 @@ Astro Data API — an open API server for publishing observations of astronomica
 - [Passport](https://www.passportjs.org)
 
 ### Validation
-- [express-validator] (https://express-validator.github.io/docs)
+- [express-validator](https://express-validator.github.io/docs)
 
 
+## Installation
+
+First of all make sure you have **Node.js** installed. Then clone the repo:
+
+``` sh
+$ git clone https://github.com/extracat/astro-data-api.git
+
+$ cd astro-data-api
+```
+
+Next you need to create `.env.local` file with environment variables `MONGODB_URI` and `JWT_SECRET`. Now you are ready to build and run:
+
+``` sh
+$ yarn f
+
+$ yarn dev
+```
+
+I've run local API server. 
 
 
 ## Telegram Data JSON
