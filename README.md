@@ -2,6 +2,23 @@
 
 Astro Data API — an open API server for publishing observations of astronomical events, data exchange and automation of telescopes.
 
+## Technology stack
+
+### Core
+- [Node.js](https://nodejs.org/)
+- [Express](https://expressjs.com)
+- [MongoDB Driver](https://mongodb.github.io/node-mongodb-native/)
+
+### Authentication and authorization
+- [JWT](https://jwt.io)
+- [Passport](https://www.passportjs.org)
+
+### Validation
+- [express-validator] (https://express-validator.github.io/docs)
+
+
+
+
 ## Telegram Data JSON
 
 ``` js
