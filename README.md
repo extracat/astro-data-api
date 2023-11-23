@@ -30,7 +30,7 @@ cd astro-data-api
 Next you need to create `.env.local` file with environment variables `MONGODB_URI` and `JWT_SECRET`. Now you are ready to build and run:
 
 ``` sh
-yarn f
+yarn
 
 yarn dev
 ```
