@@ -1,6 +1,6 @@
 # Astro Data API 
 
-Astro Data API — an open API server for publishing observations of astronomical events, data exchange and automation of telescopes.
+Astro Data API — an open API server for publishing observations of astronomical events, data exchange and automation of telescopes. Event publications (telegrams) support markdown with gfm and latex included.
 
 ## Technology stack
 
@@ -40,17 +40,19 @@ You've run local API server.
 
 ## Telegram Data JSON
 
+Here is telegram document structure.
+
 ``` js
 {
-  "_id": ObjectId,
-  "adn_id": "ADN231231A", // Human readable ID
+  "_id": ObjectId(),      // The unique database ID 
+  "adn_id": "ADN231231A", // Human readable ID (uniqe)
   "timestamp": "1994-11-05T13:15:30Z", // Post date (UTC)
-  "user_id": ObjectId, // ID of a user, who made a post
+  "user_id": ObjectId(),  // ID of a user, who made a post
   "external_id": "MASTER FROM J999999.99", // External ID
-  "title": "...", // Title of telegram
-  "body": "...", // The main content (markdown)
+  "title": "Title of telegram",
+  "body": "The main content",
   "event_datetime": "1994-11-05T13:15:30Z", // Event date and time (UTC)
-  "band": "visible", // radio | ir | visible | uv | x-ray | gamma
+  "band": "visible",      // radio | ir | visible | uv | x-ray | gamma
   "coordinates": {
     "ra": { 
       "value": "15:05:40.60",  // Right ascension 
