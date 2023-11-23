@@ -38,17 +38,17 @@ yarn dev
 You've run local API server. 
 
 
-## Telegram Data JSON
+## JSON Data Structures
 
-Here is telegram document structure.
+### Telegram
 
 ``` json
 {
-  "_id": ObjectId(),
+  "_id": "ObjectId",
   "adn_id": "ADN231231A",
-  "timestamp": "1994-11-05T13:15:30Z",
-  "user_id": ObjectId(),
-  "external_id": "GCN #num | AT #num | ATel #num | ...",
+  "timestamp": "2023-11-05T13:15:30Z",
+  "user_id": "ObjectId",
+  "external_id": "GCN #num | AT #num | ATel #num ...",
   "title": "Title of telegram",
   "body": "The main content (markdown)",
   "event_datetime": "1994-11-05T13:15:30Z",
@@ -76,14 +76,14 @@ Here is telegram document structure.
   ],
   "authors": [
     {
-      "name": "V. Lipunov",
-      "email": "lipunov@sai.msu.ru",
-      "org": "Lomonosov Moscow State University, SAI"
+      "name": "John Doe",
+      "email": "astronomer@space.com",
+      "org": "Some Institution"
     }
   ],
   "observatories": [
     {
-      "name": "MASTER-Amur Robotic Telescope",
+      "name": "Some Observatory",
       "instrument": "Wide Area Telescope",
       "observation_mode": "Visible Light"
     }
@@ -101,4 +101,28 @@ Here is telegram document structure.
   ]
 }
 
+```
+
+### User
+
+``` json
+{
+  "_id": "ObjectId",
+  "timestamp": "2023-11-21T14:52:24.871Z",
+  "email": "user@test.com",
+  "phone_number": "+17775553311",
+  "password": "(bcrypt encrypted hash)",
+  "first_name": "John",
+  "middle_name": "Alexander",
+  "last_name": "Smith",
+  "prefix": "Dr.",
+  "suffix": "Jr.",
+  "display_name": "Johnny Astronomer",
+  "date_of_birth":"1961-04-12",
+  "user_role": "viewer | editor | admin",
+  "account_status": "active | suspended | closed",
+  "last_login_date": "2023-11-21T14:52:24.871Z",
+  "locale": "en_US",
+  "time_zone": "UTC-7",
+}
 ```

@@ -29,10 +29,10 @@ async function newToken(payload) {
 }
 
 async function registerUser(email, password) {
-  const defaultRole = 'editor'; // reader | editor | admin
+  const defaultUserRole = 'editor'; // reader | editor | admin
 
   const hashedPassword = await bcrypt.hash(password, 10); 
-  const user = { email, password: hashedPassword, role: defaultRole };
+  const user = { email, password: hashedPassword, user_role: defaultUserRole };
 
   try {
     const result = await controller.insert(user);
@@ -40,7 +40,7 @@ async function registerUser(email, password) {
     const payload = {
       user_id: result.insertedId,
       user_email: email,
-      user_role: defaultRole   
+      user_role: defaultUserRole   
     };
   
     const token = await newToken(payload);
