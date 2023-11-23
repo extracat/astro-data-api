@@ -4,7 +4,7 @@ Astro Data API — an open API server for publishing observations of astronomica
 
 ## Telegram Data JSON
 
-``` 
+``` js
 {
   "_id": ObjectId,
   "adn_id": "ADN231231A", // Human readable ID
