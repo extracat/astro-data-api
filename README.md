@@ -35,7 +35,7 @@ yarn f
 yarn dev
 ```
 
-I've run local API server. 
+You've run local API server. 
 
 
 ## Telegram Data JSON
