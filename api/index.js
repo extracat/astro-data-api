@@ -11,16 +11,7 @@ const passport = require('../passport/pasport');
 
 // List of domains which are allowed to work with API
 const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'http://192.168.1.100:3000',
-    'http://192.168.1.100:3001',
-    'https://astro-data-net.vercel.app',
-    'https://astro-data-net-git-develop-extracat.vercel.app',
-    'https://mast-next.vercel.app',
-    'https://mast-next-git-develop-extracat.vercel.app'
-  ],
+  origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // allowed methods
   credentials: false, // if don't need cookies
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
