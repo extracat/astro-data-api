@@ -1,0 +1,513 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Astro Data API"
+  description: Send and receive telegrams about observations of astronomical events.
+
+servers:
+  - url: "https://api.astrodatanet.org/api/v1"
+    description: "Main API server"
+
+paths:
+  /telegrams:
+    get:
+      summary: Get all telegrams
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Telegram"
+        404:
+          description: No data found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      summary: Post a new telegram
+      requestBody:
+        required: true
+        description: Post a new telegram
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Telegram"
+      responses:
+        201:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Telegram"
+        405:
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        400:
+          description: Invalid input, validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        500:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /telegrams/{telegramId}:
+    parameters:
+      - name: telegramId
+        description: The unique identifier of the telegram
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/Id"
+    get:
+      summary: Get telegram by ID
+      responses:
+        200:
+          description: The corresponding telegram
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Telegram"
+        404:
+          description: No telegram found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        400:
+          description: "Invalid input, object invalid"
+        500:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    put:
+      summary: "Update telegram by ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Telegram"
+      responses:
+        200:
+          description: "Telegram successfully updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Telegram"
+        400:
+          description: "Invalid input, object invalid"
+        404:
+          description: "Telegram not found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    patch:
+      summary: "Partially update telegram by ID"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Telegram"
+      responses:
+        200:
+          description: "Telegram successfully updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Telegram"
+        400:
+          description: "Invalid input, object invalid"
+        404:
+          description: "Telegram not found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: "Delete telegram by ID"
+      responses:
+        200:
+          description: "Telegram successfully deleted"
+        404:
+          description: "Telegram not found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Id:
+      description: The unique database ID (ObjectId)
+      type: string
+      example: "507f1f77bcf86cd799439011"
+    Telegram:
+      type: object
+      required:
+        - title
+        - authors
+        - body
+        - event_datetime
+        - band
+      properties:
+        _id:
+          $ref: "#/components/schemas/Id"
+        adn_id:
+          description: Human readable ID
+          type: string
+          example: "ADN231231A"
+        user_id:
+          $ref: "#/components/schemas/Id"
+        timestamp:
+          description: Telegram record creation time (UTC)
+          type: string
+          format: date-time
+          example: "1994-11-05T13:15:30Z"
+        external_id:
+          description: External ID
+          type: string
+          example: "MASTER OT J165415.75-540239.27"
+        title:
+          description: Text of telegram title (plain string)
+          type: string
+          example: "Title text"
+        authors:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/Author"
+        body:
+          description: Text of telegram title (markdown text)
+          type: string
+          format: markdown
+          example: "Markdown text"
+        light_curve:
+          type: array
+          items:
+            $ref: "#/components/schemas/LightMeasurmentPoint"
+        upper_limits:
+          type: array
+          items:
+            $ref: "#/components/schemas/LightMeasurmentLimit"
+        band:
+          description: radio | ir | visible | uv | x-ray | gamma
+          type: string
+          example: "visible"
+        categories:
+          type: array
+          items:
+            type: string
+          example: ["MASTER-Net", "Gamma Burst", "X-ray"]
+        references:
+          $ref: '#/components/schemas/References'
+
+    Angle:
+      description: "This value is in degrees"
+      type: "number"
+      format: "float"
+
+    SPoint:
+      description: "This is a point on the sphere"
+      type: object
+      required:
+      - RightAscension
+      - Declination
+      properties:
+        RightAscension:
+          allOf:
+          - $ref: '#/components/schemas/Angle'
+          minimum: 0.0
+          maximum: 360.0
+          exclusiveMaximum: True
+        Declination:
+          allOf:
+          - $ref: '#/components/schemas/Angle'
+          minimum: -90.0
+          maximum: +90.0
+    
+    # SCircle:
+    #   description: "This is a spherical circle"
+    #   type: object
+    #   required:
+    #   - center
+    #   - radius
+    #   properties:
+    #     center:
+    #       $ref: '#/components/schemas/SPoint'
+    #     radius:
+    #       allOf:
+    #       - $ref: '#/components/schemas/Angle'
+    #       minimum: 0.0
+    #       maximum: 180.0
+
+    # Coordinates:
+    #   description: "J2000 coordinates with error (This is a spherical circle)"
+    #   type: object
+    #   required:
+    #   - point
+    #   properties:
+    #     point:
+    #       $ref: '#/components/schemas/SPoint'
+    #     error:
+    #       allOf:
+    #       - $ref: '#/components/schemas/Angle'
+    #       minimum: 0.0
+    #       maximum: 180.0
+
+    Coordinates:
+      description: "Coordinates with error (This is a spherical circle)"
+      allOf:
+      -  $ref: '#/components/schemas/SPoint'
+      properties:
+        error:
+          allOf:
+          - $ref: '#/components/schemas/Angle'
+          minimum: 0.0
+          maximum: 180.0
+    
+    Area:
+      description: "Area on the sphere (This is a spherical polygon)"
+      type: array
+      minItems: 3
+      items:
+        $ref: '#/components/schemas/SPoint'
+
+    # Angle:
+    #   type: object
+    #   properties:
+    #     value:
+    #       type: "number"
+    #       format: "float"
+    #       example: "1.0000"
+
+    # RightAscension:
+    #   allOf:
+    #     - $ref: "#/components/schemas/Angle"
+    #     - type: object
+    #   properties:
+    #     value:
+    #       minimum: 0.0
+    #       maximum: 359.9999999
+          
+    # Declination:
+    #   allOf:
+    #     - $ref: "#/components/schemas/Angle"
+    #     - type: object
+    #   properties:
+    #     value:
+    #       minimum: -90.0
+    #       maximum: +90.0
+
+    # SPoint:
+    #   type: object
+    #   properties:
+    #     ra:
+    #       $ref: "#/components/schemas/RightAscension"
+    #     dec:
+    #       $ref: "#/components/schemas/Declination"
+
+    # SCircle:
+    #   type: object
+    #   properties:
+    #     point:
+    #       $ref: "#/components/schemas/SPoint"
+    #     error:
+    #       type: "number"
+    #       format: "float"
+
+    LightMeasurmentLimit:
+      type: object
+      properties:
+        framae:
+          $ref: '#/components/schemas/Area'
+        datetime:
+          type: string
+          format: date-time
+          example: "1994-11-05T13:15:30Z"
+        upper_limit:
+          type: "number"
+          example: -20.0
+        exptime:
+          description: Exposition (seconds)
+          type: "number"
+          example: 180.0
+        instrument:
+          $ref: "#/components/schemas/Observatory"
+        filter:
+          description: I | R | V | B | W | C
+          type: "string"
+          example: "W"
+
+    LightMeasurmentPoint:
+      type: object
+      required: 
+        - coord2000
+        - datetime
+        - exptime
+        - instrument
+        - filter
+      anyOf:
+      - required: 
+        - magnitude
+      - required: 
+        - upper_limit
+      - required:
+        - upper_limit
+        - magnitude
+      properties:
+        coordinates:
+          $ref: "#/components/schemas/Coordinates"
+        datetime:
+          type: string
+          format: date-time
+          example: "1994-11-05T13:15:30Z"
+        magnitude:
+          type: "number"
+          example: -19.0
+        upper_limit:
+          type: "number"
+          example: -20.0
+        exptime:
+          description: Exposition (seconds)
+          type: "number"
+          example: 180.0
+        instrument:
+          $ref: "#/components/schemas/Observatory"
+        filter:
+          description: I | R | V | B | W | C
+          type: "string"
+          example: "W"
+
+    Author:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: "string"
+          example: "V. Lipunov"
+        email:
+          type: "string"
+          format: "email"
+          example: "lipunov@sai.msu.ru"
+        org:
+          type: "string"
+          example: "Lomonosov Moscow State University, SAI"
+    
+    Observatory:
+      type: object
+      properties:
+        name:
+          type: "string"
+          example: "MASTER-Amur Robotic Telescope"
+        instrument:
+          type: "string"
+          example: "Large Area Telescope"
+        observation_mode:
+          type: "string"
+          example: "Visible Light"
+    
+    DOI:
+      description: "Digital object identifier"
+      type: "string"
+      #$comment: "TODO: pattern for doi"
+
+    Selflink:
+      description: "Selflink to ADN"
+      type: "string"
+      #$comment: "TODO: pattern for link to ADN"
+      
+    References:
+      type: "array"
+      items:
+        anyOf:
+        - $ref: '#/components/schemas/DOI'
+        - $ref: '#/components/schemas/Selflink'
+        - type: "string"
+      #$comment: "TODO: references to GCN, ATel, TNS, etc"
+# Error responses
+
+    Error:
+      type: object
+      required:
+        - status
+        - code
+        - message
+      properties:
+        status:
+          description: error | success
+          type: string
+          example: "error"
+        code:
+          description: Error code from HTTP header
+          type: integer
+          example: 404
+        message:
+          description: A human readable error message
+          type: string
+          example: "Resource not found"
+
+    ValidationError:
+      type: object
+      required:
+        - status
+        - code
+        - message
+        - errors
+      properties:
+        status:
+          description: error | success
+          type: string
+          example: "error"
+        code:
+          description: Error code from HTTP header
+          type: integer
+          example: 400
+        message:
+          description: A human readable error message
+          type: string
+          example: "Resource not found"
+        errors:
+          description: List of validation errors
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldError'
+
+    FieldError:
+      type: object
+      required:
+        - field
+        - message
+      properties:
+        field:
+          description: Name of the field which containes error
+          type: string
+          example: "body"
+        message:
+          description: A human readable error message
+          type: string
+          example: "Body is required"
