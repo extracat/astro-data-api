@@ -52,7 +52,7 @@ You've run local API server.
   "title": "Title of telegram",
   "body": "The main content (markdown)",
   "event_datetime": "1994-11-05T13:15:30Z",
-  "band": "radio | ir | visible | uv | x-ray | gamma",
+  "band": "radio | ir | optical | uv | x-ray | gamma",
   "coordinates": {
     "ra": {
       "value": "15:05:40.60",
