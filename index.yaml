@@ -1,6 +1,7 @@
 openapi: "3.0.0"
+
 info:
-  version: "1.0.0"
+  version: "1.3.0"
   title: "Astro Data API"
   description: Send and receive telegrams about observations of astronomical events.
 
@@ -11,7 +12,7 @@ servers:
 paths:
   /telegrams:
     get:
-      summary: Get all telegrams
+      summary: Get an array of telegrams
       responses:
         200:
           description: "Successful operation"
@@ -22,13 +23,13 @@ paths:
                 items:
                   $ref: "#/components/schemas/Telegram"
         404:
-          description: No data found
+          description: "No data found"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
         500:
-          description: Unexpected error
+          description: "Unexpected error"
           content:
             application/json:
               schema:
@@ -71,12 +72,14 @@ paths:
 
   /telegrams/{telegramId}:
     parameters:
-      - name: telegramId
-        description: The unique identifier of the telegram
-        in: path
+      - in: path
+        name: telegramId
+        description: The identifier of the telegram. Short human readable like ADN231231A and ObjectId are both valid.
         required: true
         schema:
-          $ref: "#/components/schemas/Id"
+          description: Human readable or ObjectId
+          type: string
+          example: "ADN231231A"
     get:
       summary: Get telegram by ID
       responses:
@@ -94,6 +97,10 @@ paths:
                 $ref: "#/components/schemas/Error"
         400:
           description: "Invalid input, object invalid"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         500:
           description: Unexpected error
           content:
@@ -117,12 +124,22 @@ paths:
                 $ref: "#/components/schemas/Telegram"
         400:
           description: "Invalid input, object invalid"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         404:
           description: "Telegram not found"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        500:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
     patch:
       summary: "Partially update telegram by ID"
@@ -140,31 +157,59 @@ paths:
                 $ref: "#/components/schemas/Telegram"
         400:
           description: "Invalid input, object invalid"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         404:
           description: "Telegram not found"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        500:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
     delete:
       summary: "Delete telegram by ID"
       responses:
         200:
           description: "Telegram successfully deleted"
+        400:
+          description: "Invalid input, object invalid"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         404:
           description: "Telegram not found"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        500:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
 components:
   schemas:
-    Id:
+    ObjectId:
       description: The unique database ID (ObjectId)
       type: string
       example: "507f1f77bcf86cd799439011"
+    
+    AdnId:
+      description: Human readable ID
+      type: string
+      example: "ADN231231A"
+    
     Telegram:
       type: object
       required:
@@ -175,33 +220,35 @@ components:
         - band
       properties:
         _id:
-          $ref: "#/components/schemas/Id"
+          $ref: "#/components/schemas/ObjectId"
         adn_id:
-          description: Human readable ID
-          type: string
-          example: "ADN231231A"
+          $ref: "#/components/schemas/AdnId" 
         user_id:
-          $ref: "#/components/schemas/Id"
+          $ref: "#/components/schemas/ObjectId"
         timestamp:
           description: Telegram record creation time (UTC)
           type: string
           format: date-time
           example: "1994-11-05T13:15:30Z"
         external_id:
-          description: External ID
+          description: External ID like GCN num, AT num, ATel num, etc ...
           type: string
-          example: "MASTER OT J165415.75-540239.27"
+          example: "GCN 36060"
         title:
-          description: Text of telegram title (plain string)
+          description: Telegram title (plain string)
           type: string
-          example: "Title text"
+          example: "Title of telegram"
         authors:
+          description: Authors (plain string)
+          type: string
+          example: "John Doe, Jane Doe (Some Institution), etc..."
+        authors_list:
+          description: List of authors parsed from authors plain string
           type: array
-          minItems: 1
           items:
             $ref: "#/components/schemas/Author"
         body:
-          description: Text of telegram title (markdown text)
+          description: Text of telegram (markdown text)
           type: string
           format: markdown
           example: "Markdown text"
@@ -214,9 +261,9 @@ components:
           items:
             $ref: "#/components/schemas/LightMeasurmentLimit"
         band:
-          description: radio | ir | visible | uv | x-ray | gamma
+          description: radio | ir | optical | uv | x-ray | gamma
           type: string
-          example: "visible"
+          example: "optical"
         categories:
           type: array
           items:
@@ -407,6 +454,8 @@ components:
       required:
       - name
       properties:
+        _id:
+          $ref: "#/components/schemas/ObjectId"
         name:
           type: "string"
           example: "V. Lipunov"
@@ -449,6 +498,8 @@ components:
         - $ref: '#/components/schemas/Selflink'
         - type: "string"
       #$comment: "TODO: references to GCN, ATel, TNS, etc"
+
+
 # Error responses
 
     Error:
