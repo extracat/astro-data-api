@@ -26,6 +26,8 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Telegram"
+              example:
+                $ref: '#/components/examples/telegramExample'
         404:
           $ref: "#/components/responses/404Notfound"
         500:
@@ -219,6 +221,8 @@ components:
           example: ["MASTER-Net", "Gamma Burst", "X-ray"]
         references:
           $ref: '#/components/schemas/References'
+      example:
+        $ref: '#/components/examples/telegramExample'
 
 
     ObjectId:
@@ -555,4 +559,10 @@ components:
           schema:
             $ref: "#/components/schemas/Error"  
 
+  examples:
 
+    telegramExample:
+      value:
+        id: 1
+        name: new object
+      summary: A sample object
