@@ -477,7 +477,7 @@ components:
         - message
       properties:
         status:
-          description: "'error' | 'success'"
+          description: error | success
           type: string
         code:
           description: Error code from HTTP header
@@ -495,7 +495,7 @@ components:
         - errors
       properties:
         status:
-          description: "'error' | 'success'"
+          description: error | success
           type: string
         code:
           description: Error code from HTTP header
