@@ -8,7 +8,6 @@ const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
 const passport = require('../passport/pasport');
-const router = require('express').Router();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../index.json');
 
@@ -71,17 +70,9 @@ const apiV2Routes = require('../routes/v2/api');
 app.use('/api/v2', apiV2Routes);
 
 // Swagger UI page
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-app.use('/doc', (req, res, next) => {
-  res.json({ hello: "world" });
-});
-
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+const router = require('express').Router();
+router.use('/api-docs', swaggerUi.serve);
+router.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
 
 module.exports = app;
