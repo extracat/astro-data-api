@@ -67,13 +67,4 @@ app.use('/api/v1', apiV1Routes_telegrams);
 const apiV2Routes = require('../routes/v2/api');
 app.use('/api/v2', apiV2Routes);
 
-// Swagger UI page
-const router = require('express').Router();
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../index.json');
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server runs on port ${PORT}`));
-
-
 module.exports = app;
