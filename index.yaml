@@ -1,4 +1,4 @@
-openapi: "3.1.0"
+openapi: "3.0.0"
 info:
   version: "1.3.0"
   title: "Astro Data API"
@@ -26,8 +26,9 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Telegram"
-              example:
-                $ref: '#/components/examples/TelegramExample'
+              examples:
+                Array:
+                  $ref: '#/components/examples/TelegramArray'
         404:
           $ref: "#/components/responses/404Notfound"
         500:
@@ -67,7 +68,6 @@ paths:
         schema:
           description: Human readable or ObjectId
           type: string
-          example: "ADN231231A"
     get:
       summary: Get telegram by ID
       responses:
@@ -77,6 +77,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Telegram"
+              examples:
+                Object:
+                  $ref: '#/components/examples/Telegram'
         400:
           $ref: "#/components/responses/400BadRequest"
         404:
@@ -165,11 +168,8 @@ paths:
                 items:
                   $ref: "#/components/schemas/MockObject"
               examples:
-                sample-object:
+                Array:
                   $ref: "#/components/examples/MockObjectArray"
-                    
-
-
         404:
           $ref: "#/components/responses/404Notfound"
         500:
@@ -191,9 +191,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/MockObject"
-              examples:
-                sample-object:
-                  $ref: "#/components/examples/MockObject"
         400:
           $ref: "#/components/responses/400BadRequest"
         401:
@@ -222,7 +219,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/MockObject"
               examples:
-                sample-object:
+                Object:
                   $ref: "#/components/examples/MockObject"
         400:
           $ref: "#/components/responses/400BadRequest"
@@ -296,7 +293,6 @@ paths:
           $ref: "#/components/responses/404Notfound"
         500:
           $ref: "#/components/responses/500ServerError"
-
 
 
 ###########################
@@ -400,7 +396,6 @@ components:
           description: I | R | V | B | W | C
           type: "string"
 
-
     UpperLimitsArea:
       type: object
       properties:
@@ -420,7 +415,6 @@ components:
           description: I | R | V | B | W | C
           type: "string"
 
-   
     DOI:
       description: "Digital object identifier"
       type: "string"
@@ -432,6 +426,7 @@ components:
       example: "GCN 36060"
   
     References:
+      description: "References to DOI articles or ADN, GCN, ATel, TNS, etc."
       type: "array"
       items:
         anyOf:
@@ -439,9 +434,6 @@ components:
         - $ref: '#/components/schemas/AdnId'
         - $ref: '#/components/schemas/ExternalId'
         - type: "string"
-      #$comment: "TODO: references to ADN, GCN, ATel, TNS, etc"
-
-
 
     ##### Coordinates objects #####
 
@@ -554,6 +546,8 @@ components:
         country:
           type: "string"
 
+    ##### Mock object schemas #####
+
     MockObject:
       description: Mock object schema
       required:
@@ -564,8 +558,7 @@ components:
         name:
           type: "string"
 
-
-  ##### Error and success responses #####
+    ##### Error and success response objects #####
 
     Error:
       type: object
@@ -657,26 +650,11 @@ components:
           schema:
             $ref: "#/components/schemas/Error"  
 
-  securitySchemes:
-    token:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-
   examples:
-    
-    MockObject:
-      value:
-        _id: "507f1f77bcf86cd799439011"
-        name: "Object name"
 
-    MockObjectArray:
-      value:
-        - _id: "507f1f77bcf86cd799439011"
-          name: "Object name"
+    ##### Telegram object examples #####
 
-
-    TelegramExample:
+    Telegram:
       value:
         _id: "507f1f77bcf86cd799439011"
         adn_id: "ADN231231A" 
@@ -686,6 +664,29 @@ components:
         title: "Title of telegram"
         authors: "John Doe, Jane Doe (Some Institution), etc..."
         body: "Markdown text"
+
+    TelegramArray:
+      value:
+        - $ref: "#/components/examples/Telegram/value"
+        - $ref: "#/components/examples/Telegram/value"
+
+    ##### Mock object examples #####
+    
+    MockObject:
+      value:
+        _id: "507f1f77bcf86cd799439011"
+        name: "Object name"
+
+    MockObjectArray:
+      value:
+        - $ref: "#/components/examples/MockObject/value"
+        - $ref: "#/components/examples/MockObject/value"
+
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
 
 security:
   - token: []
