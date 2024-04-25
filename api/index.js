@@ -73,6 +73,6 @@ app.use('/api/v2', apiV2Routes);
 const router = require('express').Router();
 router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDocument));
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;
