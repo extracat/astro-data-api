@@ -179,15 +179,12 @@ components:
           description: Telegram record creation time (UTC)
           type: string
           format: date-time
-          example: "1994-11-05T13:15:30Z"
         title:
           description: Telegram title (plain string)
           type: string
-          example: "Title of telegram"
         authors:
           description: Authors (plain string)
           type: string
-          example: "John Doe, Jane Doe (Some Institution), etc..."
         authors_list:
           description: List of authors parsed from authors plain string
           type: array
@@ -197,7 +194,6 @@ components:
           description: Text of telegram (markdown text)
           type: string
           format: markdown
-          example: "Markdown text"
         light_curve:
           type: array
           items:
@@ -209,65 +205,21 @@ components:
         band:
           description: "radio | ir | optical | uv | x-ray | gamma"
           type: string
-          example: "optical"
         categories:
           type: array
           items:
-            type: string
-          example: ["MASTER-Net", "Gamma Burst", "X-ray"]
+            $ref: "#/components/schemas/Tag"
         references:
           $ref: '#/components/schemas/References'
       example:
         $ref: '#/components/examples/telegramExample'
 
-
-
-    Coordinates:
-      description: "Coordinates with error (This is a spherical circle)"
-      allOf:
-      -  $ref: '#/components/schemas/SPoint'
-      properties:
-        error:
-          allOf:
-          - $ref: '#/components/schemas/Angle'
-          minimum: 0.0
-          maximum: 180.0
-    
-    Area:
-      description: "Area on the sphere (This is a spherical polygon)"
-      type: array
-      minItems: 3
-      items:
-        $ref: '#/components/schemas/SPoint'
-
-
-    UpperLimitsArea:
-      type: object
-      properties:
-        framae:
-          $ref: '#/components/schemas/Area'
-        datetime:
-          type: string
-          format: date-time
-          example: "1994-11-05T13:15:30Z"
-        upper_limit:
-          type: "number"
-          example: -20.0
-        exptime:
-          description: Exposition (seconds)
-          type: "number"
-          example: 180.0
-        instrument:
-          $ref: "#/components/schemas/Observatory"
-        filter:
-          description: I | R | V | B | W | C
-          type: "string"
-          example: "W"
+    ##### Observations data model #####
 
     LightCurvePoint:
       type: object
       required: 
-        - coord2000
+        - coordinates
         - datetime
         - exptime
         - instrument
@@ -286,37 +238,40 @@ components:
         datetime:
           type: string
           format: date-time
-          example: "1994-11-05T13:15:30Z"
         magnitude:
           type: "number"
-          example: -19.0
         upper_limit:
           type: "number"
-          example: -20.0
         exptime:
           description: Exposition (seconds)
           type: "number"
-          example: 180.0
         instrument:
-          $ref: "#/components/schemas/Observatory"
+          $ref: "#/components/schemas/Instrument"
         filter:
           description: I | R | V | B | W | C
           type: "string"
-          example: "W"
 
 
-    
-    Observatory:
+    UpperLimitsArea:
       type: object
       properties:
-        name:
-          type: "string"
+        framae:
+          $ref: '#/components/schemas/Area'
+        datetime:
+          type: string
+          format: date-time
+        upper_limit:
+          type: "number"
+        exptime:
+          description: Exposition (seconds)
+          type: "number"
         instrument:
-          type: "string"
-        observation_mode:
+          $ref: "#/components/schemas/Instrument"
+        filter:
+          description: I | R | V | B | W | C
           type: "string"
 
-    
+   
     DOI:
       description: "Digital object identifier"
       type: "string"
@@ -338,18 +293,8 @@ components:
       #$comment: "TODO: references to ADN, GCN, ATel, TNS, etc"
 
 
-    ##### Common objects #####
 
-
-    ObjectId:
-      description: The unique database ID (ObjectId)
-      type: string
-      example: "507f1f77bcf86cd799439011"
-    
-    AdnId:
-      description: Human readable ID
-      type: string
-      example: "ADN231231A"
+    ##### Coordinates objects #####
 
     Angle:
       description: "This value is in degrees"
@@ -375,6 +320,48 @@ components:
           minimum: -90.0
           maximum: +90.0
     
+    Area:
+      description: "Area on the sphere (This is a spherical polygon)"
+      type: array
+      minItems: 3
+      items:
+        $ref: '#/components/schemas/SPoint'
+
+    Coordinates:
+      description: "Coordinates with error (This is a spherical circle)"
+      allOf:
+      - $ref: '#/components/schemas/SPoint'
+      properties:
+        error:
+          allOf:
+          - $ref: '#/components/schemas/Angle'
+          minimum: 0.0
+          maximum: 180.0
+    
+    ##### Common objects #####
+
+    ObjectId:
+      description: The unique database ID (ObjectId)
+      type: string
+      example: "507f1f77bcf86cd799439011"
+    
+    AdnId:
+      description: Human readable ID
+      type: string
+      example: "ADN231231A"
+
+    Tag:
+      description: Tag or label
+      required:
+        - text
+      properties:
+        _id:
+          $ref: "#/components/schemas/ObjectId"
+        text:
+          type: "string"
+        color:
+          type: "string"
+
     Author:
       type: object
       required:
@@ -389,6 +376,37 @@ components:
           format: "email"
         org:
           type: "string"
+
+    Instrument:
+      type: object
+      required:
+        - name
+      properties:
+        _id:
+          $ref: "#/components/schemas/ObjectId"
+        name:
+          type: "string"
+        instrument:
+          type: "string"
+        observation_mode:
+          type: "string"
+        observatory:
+          $ref: "#/components/schemas/Observatory"   
+
+    Observatory:
+      type: object
+      required:
+        - name
+      properties:
+        _id:
+          $ref: "#/components/schemas/ObjectId"        
+        name:
+          type: "string"
+        org:
+          type: "string"
+        country:
+          type: "string"
+
 
     ##### Error and success responses #####
 
