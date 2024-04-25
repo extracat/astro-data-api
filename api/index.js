@@ -73,4 +73,8 @@ app.use('/api/v2', apiV2Routes);
 // Swagger UI page
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+app.use('/doc', (req, res, next) => {
+  res.json({ hello: "world" });
+});
+
 module.exports = app;
