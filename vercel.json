@@ -2,6 +2,7 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api" },
     { "source": "/doc", "destination": "/api" },
+    { "source": "/api-docs", "destination": "/api"},
     { "source": "/api-docs/:path*", "destination": "/api"}
   ]
 }
