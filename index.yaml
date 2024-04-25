@@ -335,7 +335,7 @@ components:
         - $ref: '#/components/schemas/AdnId'
         - $ref: '#/components/schemas/ExternalId'
         - type: "string"
-      #$comment: "TODO: references to GCN, ATel, TNS, etc"
+      #$comment: "TODO: references to ADN, GCN, ATel, TNS, etc"
 
 
     ##### Common objects #####
