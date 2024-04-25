@@ -8,8 +8,6 @@ const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
 const passport = require('../passport/pasport');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../index.json');
 
 // List of domains which are allowed to work with API
 const corsOptions = {
@@ -71,8 +69,11 @@ app.use('/api/v2', apiV2Routes);
 
 // Swagger UI page
 const router = require('express').Router();
-router.use('/api-docs', swaggerUi.serve);
-router.get('/api-docs', swaggerUi.setup(swaggerDocument));
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../index.json');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server runs on port ${PORT}`));
+
 
 module.exports = app;
