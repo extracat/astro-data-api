@@ -71,7 +71,6 @@ const apiV2Routes = require('../routes/v2/api');
 app.use('/api/v2', apiV2Routes);
 
 // Swagger UI page
-router.use('/docs', swaggerUi.serve);
-router.get('/docs', swaggerUi.setup(swaggerDocument));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;
