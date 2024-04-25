@@ -4,7 +4,9 @@ const swaggerDocument = require('./index.json');
 const port = process.env.PORT || 3000;
 
 // Swagger UI page
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const CSS_URL =
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.0.0/swagger-ui.min.css";
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { customCssUrl: CSS_URL }));
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
