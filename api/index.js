@@ -8,6 +8,11 @@ const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
 const passport = require('../passport/pasport'); 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../index.json'); 
+
+// Swagger UI page
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // List of domains which are allowed to work with API
 const corsOptions = {
