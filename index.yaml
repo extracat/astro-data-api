@@ -356,8 +356,6 @@ components:
             $ref: "#/components/schemas/Tag"
         references:
           $ref: '#/components/schemas/References'
-      example:
-        $ref: '#/components/examples/telegramExample'
 
     ##### Observations data model #####
 
