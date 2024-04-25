@@ -7,9 +7,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
-const passport = require('../passport/pasport'); 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../index.json'); 
+const passport = require('../passport/pasport');
 
 // List of domains which are allowed to work with API
 const corsOptions = {
@@ -68,8 +66,5 @@ app.use('/api/v1', apiV1Routes_telegrams);
 // V2 (to be in the future)
 const apiV2Routes = require('../routes/v2/api');
 app.use('/api/v2', apiV2Routes);
-
-// Swagger UI page
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;
