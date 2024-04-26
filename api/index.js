@@ -13,7 +13,7 @@ const swaggerDocument = require('../index.json');
 const path = require('path');
 
 // Swagger UI page
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, '../public')))
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
