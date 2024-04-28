@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "9f644ac3-8efc-4893-bda8-d5eec91499b3",
-		"name": "Astro Data API v.1.3.0",
+		"name": "Collection",
 		"description": "Send and receive telegrams about observations of astronomical events.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_uid": "23206686-9f644ac3-8efc-4893-bda8-d5eec91499b3"

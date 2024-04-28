@@ -9,7 +9,7 @@ id = 10020f4a-d4a7-4f1b-a7ee-cfb36bd16954
 
 [config.relations.collections]
 rootDirectory = postman/collections
-files[] = {"id":"23206686-9f644ac3-8efc-4893-bda8-d5eec91499b3","path":"Astro Data API v.1.3.0.json","metaData":{"generateCollectionPreferences":"{\"requestNameSource\":\"URL\",\"indentCharacter\":\"Space\",\"parametersResolution\":\"Schema\",\"folderStrategy\":\"Paths\",\"includeAuthInfoInExample\":true,\"enableOptionalParameters\":true,\"keepImplicitHeaders\":false,\"includeDeprecated\":true,\"alwaysInheritAuthentication\":false,\"updateCollectionSync\":true,\"requestParametersResolution\":\"Schema\",\"exampleParametersResolution\":\"Schema\"}"}}
+files[] = {"id":"23206686-9f644ac3-8efc-4893-bda8-d5eec91499b3","path":"Collection.json","metaData":{}}
 
 [config.relations.collections.metaData]
 
