@@ -8,15 +8,22 @@ const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
 const passport = require('../passport/pasport');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../index.json');
-const path = require('path');
-
-// Swagger UI page
-app.use(express.static(path.join(__dirname, '../public')))
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
+//// Swagger UI page ////
+
+    const swaggerUi = require('swagger-ui-express');
+    const path = require('path');
+    const fs = require('fs');
+    const yaml = require('js-yaml');
+    const yamlFile = fs.readFileSync(path.join(__dirname,'../index.yaml'), 'utf8');
+    const swaggerDocument = yaml.load(yamlFile);
+    //const swaggerDocument = require('../index.json');
+
+    app.use(express.static(path.join(__dirname, '../public')))
+    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+//// End of swagger ////
 
 
 // List of domains which are allowed to work with API
