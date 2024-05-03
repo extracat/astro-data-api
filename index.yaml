@@ -95,6 +95,8 @@ paths:
 
     put:
       summary: "Update telegram by ID"
+      security: 
+        - token: []
       requestBody:
         content:
           application/json:
@@ -120,6 +122,8 @@ paths:
 
     patch:
       summary: "Partially update telegram by ID"
+      security: 
+        - token: []
       requestBody:
         content:
           application/json:
@@ -145,6 +149,8 @@ paths:
 
     delete:
       summary: "Delete telegram by ID"
+      security: 
+        - token: []
       responses:
         200:
           description: "Telegram successfully deleted"
