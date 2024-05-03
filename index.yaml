@@ -1,16 +1,16 @@
-openapi: "3.0.0"
+openapi: 3.0.0
 info:
-  version: "1.3.0"
-  title: "Astro Data API"
+  version: 1.3.0
+  title: Astro Data API
   description: Send and receive telegrams about observations of astronomical events.
 
 servers:
-  - url: "https://api.astrodatanet.org/api/v1"
-    description: "Main API server"
-  - url: "https://astro-data-api-git-develop-extracat-projects.vercel.app/api/v1"
-    description: "Develop API server"
-  - url: "http://localhost:8080/api/v1"
-    description: "Localhost API server"
+  - url: https://api.astrodatanet.org/api/v1
+    description: Main API server
+  - url: https://astro-data-api-git-develop-extracat-projects.vercel.app/api/v1
+    description: Develop API server
+  - url: http://localhost:8080/api/v1
+    description: Localhost API server
 
 tags:
 - name: telegrams
@@ -34,49 +34,52 @@ paths:
       summary: Get an array of telegrams
       responses:
         200:
-          description: "Successful operation"
+          description: Successful operation
           content:
             application/json:
               schema:
-                type: "array"
+                type: array
                 items:
-                  $ref: "#/components/schemas/Telegram"
+                  $ref: '#/components/schemas/Telegram'
               examples:
                 Array:
                   $ref: '#/components/examples/TelegramArray'
         404:
-          $ref: "#/components/responses/404Notfound"
+          $ref: '#/components/responses/404Notfound'
         500:
-          $ref: "#/components/responses/500ServerError"
+          $ref: '#/components/responses/500ServerError'
 
     post:
       tags:
         - telegrams
       summary: Post a new telegram
       security: 
-        - token: []
+        - bearerAuth: []
       requestBody:
         required: true
         description: Post a new telegram
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Telegram"
+              $ref: '#/components/schemas/Telegram'
+            examples:
+              Object:
+                $ref: '#/components/examples/TelegramPost'
       responses:
         201:
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Telegram"
+                $ref: '#/components/schemas/Telegram'
         400:
-          $ref: "#/components/responses/400BadRequest"
+          $ref: '#/components/responses/400BadRequest'
         401:
-          $ref: "#/components/responses/401Unauthorized"
+          $ref: '#/components/responses/401Unauthorized'
         403:
-          $ref: "#/components/responses/403Forbidden"
+          $ref: '#/components/responses/403Forbidden'
         500:
-          $ref: "#/components/responses/500ServerError"
+          $ref: '#/components/responses/500ServerError'
 
   /telegrams/{telegramId}:
     parameters:
@@ -97,94 +100,94 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Telegram"
+                $ref: '#/components/schemas/Telegram'
               examples:
                 Object:
                   $ref: '#/components/examples/Telegram'
         400:
-          $ref: "#/components/responses/400BadRequest"
+          $ref: '#/components/responses/400BadRequest'
         404:
-          $ref: "#/components/responses/404Notfound"
+          $ref: '#/components/responses/404Notfound'
         500:
-          $ref: "#/components/responses/500ServerError"
+          $ref: '#/components/responses/500ServerError'
 
     put:
       tags:
         - telegrams
-      summary: "Update telegram by ID"
+      summary: Update telegram by ID
       security: 
-        - token: []
+        - bearerAuth: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Telegram"
+              $ref: '#/components/schemas/Telegram'
       responses:
         200:
-          description: "Telegram successfully updated"
+          description: Telegram successfully updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Telegram"
+                $ref: '#/components/schemas/Telegram'
         400:
-          $ref: "#/components/responses/400BadRequest"
+          $ref: '#/components/responses/400BadRequest'
         401:
-          $ref: "#/components/responses/401Unauthorized"
+          $ref: '#/components/responses/401Unauthorized'
         403:
-          $ref: "#/components/responses/403Forbidden"
+          $ref: '#/components/responses/403Forbidden'
         404:
-          $ref: "#/components/responses/404Notfound"
+          $ref: '#/components/responses/404Notfound'
         500:
-          $ref: "#/components/responses/500ServerError"
+          $ref: '#/components/responses/500ServerError'
 
     patch:
       tags:
         - telegrams
-      summary: "Partially update telegram by ID"
+      summary: Partially update telegram by ID
       security: 
-        - token: []
+        - bearerAuth: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Telegram"
+              $ref: '#/components/schemas/Telegram'
       responses:
         200:
-          description: "Telegram successfully updated"
+          description: Telegram successfully updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Telegram"
+                $ref: '#/components/schemas/Telegram'
         400:
-          $ref: "#/components/responses/400BadRequest"
+          $ref: '#/components/responses/400BadRequest'
         401:
-          $ref: "#/components/responses/401Unauthorized"
+          $ref: '#/components/responses/401Unauthorized'
         403:
-          $ref: "#/components/responses/403Forbidden"
+          $ref: '#/components/responses/403Forbidden'
         404:
-          $ref: "#/components/responses/404Notfound"
+          $ref: '#/components/responses/404Notfound'
         500:
-          $ref: "#/components/responses/500ServerError"
+          $ref: '#/components/responses/500ServerError'
 
     delete:
       tags:
         - telegrams
-      summary: "Delete telegram by ID"
+      summary: Delete telegram by ID
       security: 
-        - token: []
+        - bearerAuth: []
       responses:
         200:
-          description: "Telegram successfully deleted"
+          description: Telegram successfully deleted
         400:
-          $ref: "#/components/responses/400BadRequest"
+          $ref: '#/components/responses/400BadRequest'
         401:
-          $ref: "#/components/responses/401Unauthorized"
+          $ref: '#/components/responses/401Unauthorized'
         403:
-          $ref: "#/components/responses/403Forbidden"
+          $ref: '#/components/responses/403Forbidden'
         404:
-          $ref: "#/components/responses/404Notfound"
+          $ref: '#/components/responses/404Notfound'
         500:
-          $ref: "#/components/responses/500ServerError"
+          $ref: '#/components/responses/500ServerError'
 
   #####  Mock object endpoints  #####
 
@@ -195,47 +198,52 @@ paths:
       summary: Get all objects
       responses:
         200:
-          description: "Successful operation"
+          description: Successful operation
           content:
             application/json:
               schema:
-                type: "array"
+                type: array
                 items:
-                  $ref: "#/components/schemas/MockObject"
+                  $ref: '#/components/schemas/MockObject'
               examples:
                 Array:
-                  $ref: "#/components/examples/MockObjectArray"
+                  $ref: '#/components/examples/MockObjectArray'
         404:
-          $ref: "#/components/responses/404Notfound"
+          $ref: '#/components/responses/404Notfound'
         500:
-          $ref: "#/components/responses/500ServerError"
+          $ref: '#/components/responses/500ServerError'
 
     post:
       tags:
         - mock-objects
       summary: Post an object
+      security: 
+        - bearerAuth: []
       requestBody:
         required: true
         description: A new object
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MockObject"
+              $ref: '#/components/schemas/MockObject'
+            examples:
+              Object:
+                $ref: '#/components/examples/MockObjectPost'
       responses:
         201:
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MockObject"
+                $ref: '#/components/schemas/MockObject'
         400:
-          $ref: "#/components/responses/400BadRequest"
+          $ref: '#/components/responses/400BadRequest'
         401:
-          $ref: "#/components/responses/401Unauthorized"
+          $ref: '#/components/responses/401Unauthorized'
         403:
-          $ref: "#/components/responses/403Forbidden"
+          $ref: '#/components/responses/403Forbidden'
         500:
-          $ref: "#/components/responses/500ServerError"
+          $ref: '#/components/responses/500ServerError'
 
   /mock-objects/{mockObjectId}:
     parameters:
@@ -256,88 +264,94 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MockObject"
+                $ref: '#/components/schemas/MockObject'
               examples:
                 Object:
-                  $ref: "#/components/examples/MockObject"
+                  $ref: '#/components/examples/MockObject'
         400:
-          $ref: "#/components/responses/400BadRequest"
+          $ref: '#/components/responses/400BadRequest'
         404:
-          $ref: "#/components/responses/404Notfound"
+          $ref: '#/components/responses/404Notfound'
         500:
-          $ref: "#/components/responses/500ServerError"
+          $ref: '#/components/responses/500ServerError'
 
     put:
       tags:
         - mock-objects
-      summary: "Update object by ID"
+      summary: Update object by ID
+      security: 
+        - bearerAuth: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MockObject"
+              $ref: '#/components/schemas/MockObject'
       responses:
         200:
-          description: "Object successfully updated"
+          description: Object successfully updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MockObject"
+                $ref: '#/components/schemas/MockObject'
         400:
-          $ref: "#/components/responses/400BadRequest"
+          $ref: '#/components/responses/400BadRequest'
         401:
-          $ref: "#/components/responses/401Unauthorized"
+          $ref: '#/components/responses/401Unauthorized'
         403:
-          $ref: "#/components/responses/403Forbidden"
+          $ref: '#/components/responses/403Forbidden'
         404:
-          $ref: "#/components/responses/404Notfound"
+          $ref: '#/components/responses/404Notfound'
         500:
-          $ref: "#/components/responses/500ServerError"
+          $ref: '#/components/responses/500ServerError'
 
     patch:
       tags:
         - mock-objects
-      summary: "Partially update object by ID"
+      summary: Partially update object by ID
+      security: 
+        - bearerAuth: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MockObject"
+              $ref: '#/components/schemas/MockObject'
       responses:
         200:
-          description: "Object successfully updated"
+          description: Object successfully updated
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MockObject"
+                $ref: '#/components/schemas/MockObject'
         400:
-          $ref: "#/components/responses/400BadRequest"
+          $ref: '#/components/responses/400BadRequest'
         401:
-          $ref: "#/components/responses/401Unauthorized"
+          $ref: '#/components/responses/401Unauthorized'
         403:
-          $ref: "#/components/responses/403Forbidden"
+          $ref: '#/components/responses/403Forbidden'
         404:
-          $ref: "#/components/responses/404Notfound"
+          $ref: '#/components/responses/404Notfound'
         500:
-          $ref: "#/components/responses/500ServerError"
+          $ref: '#/components/responses/500ServerError'
 
     delete:
       tags:
         - mock-objects
-      summary: "Delete object by ID"
+      summary: Delete object by ID
+      security: 
+        - bearerAuth: []
       responses:
         200:
-          description: "Object successfully deleted"
+          description: Object successfully deleted
         400:
-          $ref: "#/components/responses/400BadRequest"
+          $ref: '#/components/responses/400BadRequest'
         401:
-          $ref: "#/components/responses/401Unauthorized"
+          $ref: '#/components/responses/401Unauthorized'
         403:
-          $ref: "#/components/responses/403Forbidden"
+          $ref: '#/components/responses/403Forbidden'
         404:
-          $ref: "#/components/responses/404Notfound"
+          $ref: '#/components/responses/404Notfound'
         500:
-          $ref: "#/components/responses/500ServerError"
+          $ref: '#/components/responses/500ServerError'
 
 
 ###########################
@@ -356,17 +370,20 @@ components:
         - title
         - authors
         - body
-        - event_datetime
         - band
       properties:
         _id:
-          $ref: "#/components/schemas/ObjectId"
+          $ref: '#/components/schemas/ObjectId'
         adn_id:
-          $ref: "#/components/schemas/AdnId" 
+          $ref: '#/components/schemas/AdnId'
         user_id:
-          $ref: "#/components/schemas/ObjectId"
+          $ref: '#/components/schemas/ObjectId'
         timestamp:
           description: Telegram record creation time (UTC)
+          type: string
+          format: date-time
+        event_datetime:
+          description: Space event time (UTC)
           type: string
           format: date-time
         title:
@@ -379,7 +396,7 @@ components:
           description: List of authors parsed from authors plain string
           type: array
           items:
-            $ref: "#/components/schemas/Author"
+            $ref: '#/components/schemas/Author'
         body:
           description: Text of telegram (markdown text)
           type: string
@@ -387,18 +404,18 @@ components:
         light_curve:
           type: array
           items:
-            $ref: "#/components/schemas/LightCurvePoint"
+            $ref: '#/components/schemas/LightCurvePoint'
         upper_limits:
           type: array
           items:
-            $ref: "#/components/schemas/UpperLimitsArea"
+            $ref: '#/components/schemas/UpperLimitsArea'
         band:
-          description: "radio | ir | optical | uv | x-ray | gamma"
+          description: radio | ir | optical | uv | x-ray | gamma
           type: string
         categories:
           type: array
           items:
-            $ref: "#/components/schemas/Tag"
+            $ref: '#/components/schemas/Tag'
         references:
           $ref: '#/components/schemas/References'
 
@@ -422,22 +439,22 @@ components:
         - magnitude
       properties:
         coordinates:
-          $ref: "#/components/schemas/Coordinates"
+          $ref: '#/components/schemas/Coordinates'
         datetime:
           type: string
           format: date-time
         magnitude:
-          type: "number"
+          type: number
         upper_limit:
-          type: "number"
+          type: number
         exptime:
           description: Exposition (seconds)
-          type: "number"
+          type: number
         instrument:
-          $ref: "#/components/schemas/Instrument"
+          $ref: '#/components/schemas/Instrument'
         filter:
           description: I | R | V | B | W | C
-          type: "string"
+          type: string
 
     UpperLimitsArea:
       type: object
@@ -448,45 +465,45 @@ components:
           type: string
           format: date-time
         upper_limit:
-          type: "number"
+          type: number
         exptime:
           description: Exposition (seconds)
-          type: "number"
+          type: number
         instrument:
-          $ref: "#/components/schemas/Instrument"
+          $ref: '#/components/schemas/Instrument'
         filter:
           description: I | R | V | B | W | C
-          type: "string"
+          type: string
 
     DOI:
-      description: "Digital object identifier"
-      type: "string"
-      example: "10.1109/5.771073"
+      description: Digital object identifier
+      type: string
+      example: 10.1109/5.771073
 
     ExternalId:
       description: External ID like GCN num, AT num, ATel num, etc ...
       type: string
-      example: "GCN 36060"
+      example: GCN 36060
   
     References:
-      description: "References to DOI articles or ADN, GCN, ATel, TNS, etc."
-      type: "array"
+      description: References to DOI articles or ADN, GCN, ATel, TNS, etc.
+      type: array
       items:
         anyOf:
         - $ref: '#/components/schemas/DOI'
         - $ref: '#/components/schemas/AdnId'
         - $ref: '#/components/schemas/ExternalId'
-        - type: "string"
+        - type: string
 
     ##### Coordinates objects #####
 
     Angle:
-      description: "This value is in degrees"
-      type: "number"
-      format: "float"
+      description: This value is in degrees
+      type: number
+      format: float
 
     SPoint:
-      description: "This is a point on the sphere"
+      description: This is a point on the sphere
       type: object
       required:
       - RightAscension
@@ -505,14 +522,14 @@ components:
           maximum: +90.0
     
     Area:
-      description: "Area on the sphere (This is a spherical polygon)"
+      description: Area on the sphere (This is a spherical polygon)
       type: array
       minItems: 3
       items:
         $ref: '#/components/schemas/SPoint'
 
     Coordinates:
-      description: "Coordinates with error (This is a spherical circle)"
+      description: Coordinates with error (This is a spherical circle)
       allOf:
       - $ref: '#/components/schemas/SPoint'
       properties:
@@ -538,11 +555,11 @@ components:
         - text
       properties:
         _id:
-          $ref: "#/components/schemas/ObjectId"
+          $ref: '#/components/schemas/ObjectId'
         text:
-          type: "string"
+          type: string
         color:
-          type: "string"
+          type: string
 
     Author:
       type: object
@@ -550,14 +567,14 @@ components:
         - name
       properties:
         _id:
-          $ref: "#/components/schemas/ObjectId"
+          $ref: '#/components/schemas/ObjectId'
         name:
-          type: "string"
+          type: string
         email:
-          type: "string"
-          format: "email"
+          type: string
+          format: email
         org:
-          type: "string"
+          type: string
 
     Instrument:
       type: object
@@ -565,15 +582,15 @@ components:
         - name
       properties:
         _id:
-          $ref: "#/components/schemas/ObjectId"
+          $ref: '#/components/schemas/ObjectId'
         name:
-          type: "string"
+          type: string
         instrument:
-          type: "string"
+          type: string
         observation_mode:
-          type: "string"
+          type: string
         observatory:
-          $ref: "#/components/schemas/Observatory"   
+          $ref: '#/components/schemas/Observatory'
 
     Observatory:
       type: object
@@ -581,13 +598,13 @@ components:
         - name
       properties:
         _id:
-          $ref: "#/components/schemas/ObjectId"        
+          $ref: '#/components/schemas/ObjectId'
         name:
-          type: "string"
+          type: string
         org:
-          type: "string"
+          type: string
         country:
-          type: "string"
+          type: string
 
     ##### Mock object schemas #####
 
@@ -597,9 +614,9 @@ components:
         - name
       properties:
         _id:
-          $ref: "#/components/schemas/ObjectId"
+          $ref: '#/components/schemas/ObjectId'
         name:
-          type: "string"
+          type: string
 
     ##### Error and success response objects #####
 
@@ -664,6 +681,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/InputError'
+          example:
+            status: error
+            code: 400
+            message: Validation error
+            errors: 
+              field: Some field
+              message: Can't be empty
 
     401Unauthorized:
       description: Unauthorized (missing or invalid authentication token)
@@ -671,6 +695,10 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+          example:
+            status: error
+            code: 401
+            message: Unauthorized
 
     403Forbidden:
       description: Forbidden (the user does not have the necessary permissions)
@@ -678,20 +706,32 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+          example:
+            status: error
+            code: 403
+            message: Forbidden
 
     404Notfound:
       description: Not found
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"      
+            $ref: '#/components/schemas/Error'
+          example:
+            status: error
+            code: 404
+            message: Not found
     
     500ServerError:
       description: Unexpected error
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"  
+            $ref: '#/components/schemas/Error'
+          example:
+            status: error
+            code: 500
+            message: Unexpected error
 
   examples:
 
@@ -699,38 +739,52 @@ components:
 
     Telegram:
       value:
-        _id: "507f1f77bcf86cd799439011"
-        adn_id: "ADN231231A" 
-        user_id: "507f1f77bcf86cd799439011"
-        timestamp: "1994-11-05T13:15:30Z"
-        external_id: "GCN 36060"
-        title: "Title of telegram"
-        authors: "John Doe, Jane Doe (Some Institution), etc..."
-        body: "Markdown text"
+        _id: 507f1f77bcf86cd799439011
+        adn_id: ADN231231A 
+        user_id: 507f1f77bcf86cd799439011
+        timestamp: 1994-11-05T13:15:30Z
+        external_id: GCN 36060
+        title: Title of telegram
+        authors: John Doe, Jane Doe (Some Institution), etc...
+        body: Markdown text
+        band: optical
+
+    TelegramPost:
+      value:
+        title: Title of telegram
+        authors: John Doe, Jane Doe (Some Institution), etc...
+        body: Markdown text
+        band: optical
+
+
 
     TelegramArray:
       value:
-        - $ref: "#/components/examples/Telegram/value"
-        - $ref: "#/components/examples/Telegram/value"
+        - $ref: '#/components/examples/Telegram/value'
+        - $ref: '#/components/examples/Telegram/value'
 
     ##### Mock object examples #####
     
     MockObject:
       value:
-        _id: "507f1f77bcf86cd799439011"
-        name: "Object name"
+        _id: 507f1f77bcf86cd799439011
+        name: Object name
+    
+    MockObjectPost:
+      value:
+        name: Object name
 
     MockObjectArray:
       value:
-        - $ref: "#/components/examples/MockObject/value"
-        - $ref: "#/components/examples/MockObject/value"
+        - _id: 507f1f77bcf86cd799439011
+          name: Object 1 name
+        - _id: 507f1f77bcf86cd799439012
+          name: Object 2 name
 
   securitySchemes:
-    token:
+    bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-
-security:
-  - token: []
+      description: Enter your JWT token
 

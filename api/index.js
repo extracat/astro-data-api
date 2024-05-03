@@ -10,20 +10,21 @@ const app = express();
 const passport = require('../passport/pasport');
 
 
-//// Swagger UI page ////
+///////// Swagger UI page /////////
 
-    const swaggerUi = require('swagger-ui-express');
-    const path = require('path');
-    const fs = require('fs');
-    const yaml = require('js-yaml');
-    const yamlFile = fs.readFileSync(path.join(__dirname,'../index.yaml'), 'utf8');
-    const swaggerDocument = yaml.load(yamlFile);
-    //const swaggerDocument = require('../index.json');
+const swaggerUi = require('swagger-ui-express');
+const path = require('path');
+const fs = require('fs');
+const yaml = require('js-yaml');
+const yamlFile = fs.readFileSync(path.join(__dirname,'../index.yaml'), 'utf8');
+const swaggerDocument = yaml.load(yamlFile);
 
-    app.use(express.static(path.join(__dirname, '../public')))
-    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(express.static(path.join(__dirname, '../public')))
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-//// End of swagger ////
+///////// End of swagger /////////
+
+
 
 
 // List of domains which are allowed to work with API
@@ -35,6 +36,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+
 
 ///////// Application-level middleware /////////
 
@@ -68,9 +71,12 @@ if (process.env.THROTTLING === 'TRUE') {
 app.use(express.json());
 app.use(passport.initialize());
 
-///////// End of middleware block /////////
+///////// End of application-level middleware /////////
 
-// Main application routes
+
+
+///////// Main application routes /////////
+
 // V1 (Current version)
 const apiV1Routes_api = require('../routes/v1/api');
 const apiV1Routes_auth = require('../routes/v1/auth');
@@ -83,5 +89,23 @@ app.use('/api/v1', apiV1Routes_telegrams);
 // V2 (to be in the future)
 const apiV2Routes = require('../routes/v2/api');
 app.use('/api/v2', apiV2Routes);
+
+///////// End of main application routes /////////
+
+
+
+// Default 404 error handlers
+
+const { ResponseError } = require('../models/responseError');
+
+app.get('*', function(req, res){
+  res.status(404).json(new ResponseError('error', 404, 'Not found')); 
+})
+
+// Default 500 error handlers
+app.use(function (err, req, res, next) {
+  console.error(err.stack)
+  res.status(500).json(new ResponseError('error', 500, 'Unexpected error')); 
+})
 
 module.exports = app;
