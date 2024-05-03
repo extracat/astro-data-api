@@ -40,6 +40,8 @@ paths:
 
     post:
       summary: Post a new telegram
+      security: 
+        - token: []
       requestBody:
         required: true
         description: Post a new telegram
