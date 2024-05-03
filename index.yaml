@@ -12,6 +12,15 @@ servers:
   - url: "http://localhost:8080/api/v1"
     description: "Localhost API server"
 
+tags:
+- name: telegrams
+  description: Operations about ADN telegrams
+- name: users
+  description: Operations about users
+- name: mock-objects
+  description: Template endpoint for testing purposes
+
+
 ###########################
 #####    Endpoints    #####
 ###########################
@@ -20,6 +29,8 @@ paths:
 
   /telegrams:
     get:
+      tags:
+        - telegrams
       summary: Get an array of telegrams
       responses:
         200:
@@ -39,6 +50,8 @@ paths:
           $ref: "#/components/responses/500ServerError"
 
     post:
+      tags:
+        - telegrams
       summary: Post a new telegram
       security: 
         - token: []
@@ -75,6 +88,8 @@ paths:
           description: Human readable or ObjectId
           type: string
     get:
+      tags:
+        - telegrams
       summary: Get telegram by ID
       responses:
         200:
@@ -94,6 +109,8 @@ paths:
           $ref: "#/components/responses/500ServerError"
 
     put:
+      tags:
+        - telegrams
       summary: "Update telegram by ID"
       security: 
         - token: []
@@ -121,6 +138,8 @@ paths:
           $ref: "#/components/responses/500ServerError"
 
     patch:
+      tags:
+        - telegrams
       summary: "Partially update telegram by ID"
       security: 
         - token: []
@@ -148,6 +167,8 @@ paths:
           $ref: "#/components/responses/500ServerError"
 
     delete:
+      tags:
+        - telegrams
       summary: "Delete telegram by ID"
       security: 
         - token: []
@@ -169,6 +190,8 @@ paths:
 
   /mock-objects:
     get:
+      tags:
+        - mock-objects
       summary: Get all objects
       responses:
         200:
@@ -188,6 +211,8 @@ paths:
           $ref: "#/components/responses/500ServerError"
 
     post:
+      tags:
+        - mock-objects
       summary: Post an object
       requestBody:
         required: true
@@ -222,6 +247,8 @@ paths:
           description: ObjectId
           type: string
     get:
+      tags:
+        - mock-objects
       summary: Get object by ID
       responses:
         200:
@@ -241,6 +268,8 @@ paths:
           $ref: "#/components/responses/500ServerError"
 
     put:
+      tags:
+        - mock-objects
       summary: "Update object by ID"
       requestBody:
         content:
@@ -266,6 +295,8 @@ paths:
           $ref: "#/components/responses/500ServerError"
 
     patch:
+      tags:
+        - mock-objects
       summary: "Partially update object by ID"
       requestBody:
         content:
@@ -291,6 +322,8 @@ paths:
           $ref: "#/components/responses/500ServerError"
 
     delete:
+      tags:
+        - mock-objects
       summary: "Delete object by ID"
       responses:
         200:
