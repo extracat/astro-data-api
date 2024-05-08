@@ -760,8 +760,25 @@ components:
 
     TelegramArray:
       value:
-        - $ref: '#/components/examples/Telegram/value'
-        - $ref: '#/components/examples/Telegram/value'
+        - _id: 507f1f77bcf86cd799439011
+          adn_id: ADN231231A 
+          user_id: 507f1f77bcf86cd799439011
+          timestamp: 1994-11-05T13:15:30Z
+          external_id: GCN 36060
+          title: Title of telegram
+          authors: John Doe, Jane Doe (Some Institution), etc...
+          body: Markdown text
+          band: optical
+          
+        - _id: 507f1f77bcf86cd799439011
+          adn_id: ADN231231A 
+          user_id: 507f1f77bcf86cd799439011
+          timestamp: 1994-11-05T13:15:30Z
+          external_id: GCN 36060
+          title: Title of telegram
+          authors: John Doe, Jane Doe (Some Institution), etc...
+          body: Markdown text
+          band: optical
 
     ##### Mock object examples #####
     
