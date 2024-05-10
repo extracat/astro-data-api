@@ -794,9 +794,9 @@ components:
     MockObjectArray:
       value:
         - _id: 507f1f77bcf86cd799439011
-          name: Object 1 name
+          name: Object name
         - _id: 507f1f77bcf86cd799439012
-          name: Object 2 name
+          name: Object name
 
   securitySchemes:
     bearerAuth:
