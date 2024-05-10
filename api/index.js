@@ -81,10 +81,12 @@ app.use(passport.initialize());
 const apiV1Routes_api = require('../routes/v1/api');
 const apiV1Routes_auth = require('../routes/v1/auth');
 const apiV1Routes_telegrams = require('../routes/v1/telegrams');
+const apiV1Routes_mockObjects = require('../routes/v1/mockObjects');
 
 app.use('/api/v1', apiV1Routes_api);
 app.use('/api/v1', apiV1Routes_auth);
 app.use('/api/v1', apiV1Routes_telegrams);
+app.use('/api/v1', apiV1Routes_mockObjects);
 
 // V2 (to be in the future)
 const apiV2Routes = require('../routes/v2/api');
