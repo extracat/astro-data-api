@@ -353,6 +353,46 @@ paths:
         500:
           $ref: '#/components/responses/500ServerError'
 
+  /version:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  version:
+                    type: string
+                    example: "31.199.1"
+
+  /passport:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  payload:
+                    type: object
+                    properties:
+                      user_id:
+                        $ref: '#/components/schemas/ObjectId'
+                      user_email:
+                        type: string
+                        format: email
+                      user_role:
+                        type: string
+                      iat:
+                        type: integer 
+                      exp:
+                        type: integer
+                      sub:
+                        type: string
+        401:
+          $ref: '#/components/responses/401Unauthorized'
 
 ###########################
 #####     Schemas     #####
@@ -361,7 +401,7 @@ paths:
 components:
 
   schemas:
-    
+
     ##### Telegram data model #####
 
     Telegram:
@@ -484,7 +524,7 @@ components:
       description: External ID like GCN num, AT num, ATel num, etc ...
       type: string
       example: GCN 36060
-  
+
     References:
       description: References to DOI articles or ADN, GCN, ATel, TNS, etc.
       type: array
@@ -520,7 +560,7 @@ components:
           - $ref: '#/components/schemas/Angle'
           minimum: -90.0
           maximum: +90.0
-    
+
     Area:
       description: Area on the sphere (This is a spherical polygon)
       type: array
@@ -538,13 +578,13 @@ components:
           - $ref: '#/components/schemas/Angle'
           minimum: 0.0
           maximum: 180.0
-    
+
     ##### Common objects #####
 
     ObjectId:
       description: The unique database ID (ObjectId)
       type: string
-    
+
     AdnId:
       description: Human readable ID
       type: string
@@ -721,7 +761,7 @@ components:
             status: error
             code: 404
             message: Not found
-    
+
     500ServerError:
       description: Unexpected error
       content:
@@ -769,7 +809,7 @@ components:
           authors: John Doe, Jane Doe (Some Institution), etc...
           body: Markdown text
           band: optical
-          
+
         - _id: 507f1f77bcf86cd799439011
           adn_id: ADN231231A 
           user_id: 507f1f77bcf86cd799439011
@@ -781,12 +821,12 @@ components:
           band: optical
 
     ##### Mock object examples #####
-    
+
     MockObject:
       value:
         _id: 507f1f77bcf86cd799439011
         name: Object name
-    
+
     MockObjectPost:
       value:
         name: Object name
