@@ -33,8 +33,8 @@ module.exports.findOne = async function (query) {
 
 module.exports.insert = async function (data) { 
   try {
-    object = { ...object, ...data };
-    return await object;
+    const result = { ...object, ...data };
+    return await result;
   } catch (error) {
     console.error("Controller Error: ", error);
     throw error;
@@ -53,8 +53,8 @@ module.exports.delete = async function (query) {
 module.exports.update = async function (query, data) { 
   try {
     object._id = query;
-    object = { ...object, ...data };
-    return await object;  
+    const result = { ...object, ...data };
+    return await result;  
   } catch (error) {
     console.error("Controller Error: ", error);
     throw error;

@@ -95,7 +95,7 @@ router.post('/auth', userValidatorsPOST, validationErrorHandler, (req, res) => {
 
 
 // Passport test
-router.get('/passport', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/passport', passport.authenticate('jwt', { session: false, failWithError: true }), (req, res) => {
   const payload = req.user;
   res.json({ payload: payload });
 });

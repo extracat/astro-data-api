@@ -19,7 +19,7 @@ const controller = require('../../controllers/mockObjectsController')
 ////    POST    ////
 ////////////////////
 router.post('/mock-objects', 
-  passport.authenticate('jwt', { session: false }), 
+  passport.authenticate('jwt', { session: false, failWithError: true }), 
   mockObjectsValidatorsPOST, 
   validationErrorHandler, 
   (req, res) => {  
@@ -64,7 +64,7 @@ router.get('/mock-objects/:id', mockObjectsValidatorsGET, validationErrorHandler
 ////    PUT     ////
 ////////////////////
 router.put('/mock-objects/:id', 
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false, failWithError: true }),
   mockObjectsValidatorsPUT, 
   validationErrorHandler, 
   (req, res) => {
@@ -83,7 +83,7 @@ router.put('/mock-objects/:id',
 ////   PATCH    ////
 ////////////////////
 router.patch('/mock-objects/:id', 
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false, failWithError: true  }),
   mockObjectsValidatorsPATCH, 
   validationErrorHandler, 
   (req, res) => {
@@ -102,7 +102,7 @@ router.patch('/mock-objects/:id',
 ////   DELETE   ////
 ////////////////////
 router.delete('/mock-objects/:id', 
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false, failWithError: true  }),
   mockObjectsValidatorsDELETE, 
   validationErrorHandler, 
   (req, res) => {

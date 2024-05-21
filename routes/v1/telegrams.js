@@ -19,7 +19,7 @@ const controller = require('../../controllers/telegramsController')
 ////    POST    ////
 ////////////////////
 router.post('/telegrams', 
-  passport.authenticate('jwt', { session: false }), 
+  passport.authenticate('jwt', { session: false, failWithError: true }), 
   telegramValidatorsPOST, 
   validationErrorHandler, 
   (req, res) => {  
@@ -61,7 +61,7 @@ router.get('/telegrams/:id', telegramValidatorsGET, validationErrorHandler,  (re
 ////    PUT     ////
 ////////////////////
 router.put('/telegrams/:id', 
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false, failWithError: true }),
   telegramValidatorsPUT, 
   validationErrorHandler, 
   (req, res) => {
@@ -80,7 +80,7 @@ router.put('/telegrams/:id',
 ////   PATCH    ////
 ////////////////////
 router.patch('/telegrams/:id', 
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false, failWithError: true }),
   telegramValidatorsPATCH, 
   validationErrorHandler, 
   (req, res) => {
@@ -99,7 +99,7 @@ router.patch('/telegrams/:id',
 ////   DELETE   ////
 ////////////////////
 router.delete('/telegrams/:id', 
-  passport.authenticate('jwt', { session: false }),
+  passport.authenticate('jwt', { session: false, failWithError: true }),
   telegramValidatorsDELETE, 
   validationErrorHandler, 
   (req, res) => {

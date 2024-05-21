@@ -95,6 +95,19 @@ app.use('/api/v2', apiV2Routes);
 ///////// End of main application routes /////////
 
 
+// Passport.js 401 "Unauthorized" error handler
+app.use((err, req, res, next) => {
+  if (err) {
+      // Auth error 401
+      if (err.name === 'AuthenticationError' && err.status === 401) {
+          return res.status(401).json(new ResponseError('error', 401, 'Unauthorized'));
+      }
+      // Other errors
+      return res.status(500).json(new ResponseError('error', 500, 'Unexpected error')); 
+  }
+  next();
+});
+
 
 // Default 404 error handlers
 
