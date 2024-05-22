@@ -11,7 +11,7 @@
 !.yarn/sdks
 !.yarn/versions
 #!.yarn/cache
-
+.yarnrc.yml
 
 # testing
 /coverage
@@ -27,6 +27,7 @@
 .DS_Store
 *.pem
 *.log
+*~
 #/.vscode
 
 # debug
