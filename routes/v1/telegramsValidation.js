@@ -2,17 +2,16 @@ const { check, param, body } = require('express-validator');
 const { validationResult } = require('express-validator');
 
 const allowedFields = [
-  'external_id',
-  'title',
-  'body',
-  'event_datetime',
-  'band',
-  'coordinates',
+  'event_datetime', //
+  'title',          //
+  'authors',        //
+  'authors_list',
+  'body',           //
   'light_curve',
-  'authors',
-  'observatories',
-  'categories',
-  'references'  
+  'upper_limits',
+  'band',           //
+  'categories',     //
+  'references'
 ];
 
 // Validation schemas
@@ -28,30 +27,24 @@ const telegramDataValidator = [
     .isString().withMessage('Body must be a string')
     .isLength({ min: 0, max: 100000 }).withMessage('Body must be no longer than 100000 characters'),
 
+  check('authors')
+    .optional()
+    .isString().withMessage('Authors must be a string')
+    .isLength({ min: 0, max: 100000 }).withMessage('Authors must be no longer than 100000 characters'),
+
+  check('authors_list')
+    .optional()
+    .isArray().withMessage('Authors list must be an array')
+    .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
+
+  check('authors_list.*')
+    .optional()
+    .isObject().withMessage('Author in authors list must be an object')
+    .isLength({ min: 0, max: 10000 }).withMessage('Must be no longer than 10000 characters'),
+
   check('event_datetime')
     .optional()
     .isISO8601().withMessage('Timestamp must be a valid ISO 8601 date string'),
-
-  check('coordinates')
-    .optional()
-    .isObject().withMessage('Coordinates must be an object')
-    .isLength({ min: 0, max: 1000 }).withMessage('Must be no longer than 1000 characters'),
-  
-  check('coordinates.ra').if(body('coordinates').exists())
-    .exists().withMessage('Coordinate RA is required')
-    .isObject().withMessage('Coordinate RA must be an object'),
-
-  check('coordinates.ra.value').if(body('coordinates').exists())
-    .exists().withMessage('Coordinate RA.value is required')
-    .isString().withMessage('Coordinate RA.value must be a string'),
-
-  check('coordinates.dec').if(body('coordinates').exists())
-    .exists().withMessage('Coordinate DEC is required')
-    .isObject().withMessage('Coordinate DEC must be an object'),
-
-  check('coordinates.dec.value').if(body('coordinates').exists())
-    .exists().withMessage('Coordinate DEC.value is required')
-    .isString().withMessage('Coordinate DEC.value must be a string'),
   
   check('light_curve')
     .optional()
@@ -61,36 +54,29 @@ const telegramDataValidator = [
   check('light_curve.*')
     .optional()
     .isObject().withMessage('Light curve measurment must be an object')
+    .isLength({ min: 0, max: 10000 }).withMessage('Must be no longer than 1000 characters'),
+
+  check('light_curve.*.coordinates').if(body('light_curve.*').exists())
+    .exists().withMessage('Coordinates are required')
+    .isObject().withMessage('Coordinates must be an object')
     .isLength({ min: 0, max: 1000 }).withMessage('Must be no longer than 1000 characters'),
+  
+  check('light_curve.*.coordinates.right_ascension').if(body('light_curve.*.coordinates').exists())
+    .exists().withMessage('Coordinate RA is required')
+    .isString().withMessage('Coordinate RA must be a string'),
+
+  check('light_curve.*.coordinates.declination').if(body('light_curve.*.coordinates').exists())
+    .exists().withMessage('Coordinate DEC is required')
+    .isString().withMessage('Coordinate DEC must be a string'),
+
+  check('light_curve.*.coordinates.error').if(body('light_curve.*.coordinates').exists())
+      .exists().withMessage('Coordinate error is required')
+      .isString().withMessage('Coordinate error must be a string'),
 
   check('light_curve.*.datetime')
     .optional()
     .isISO8601().withMessage('Light curve measurment datetime must be a valid ISO 8601 date string'),
 
-  check('authors')
-    .optional()
-    .isArray().withMessage('Authors must be an array')
-    .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
-
-  check('authors.*')
-    .optional()
-    .isObject().withMessage('Authors must be an object')
-    .isLength({ min: 0, max: 10000 }).withMessage('Must be no longer than 10000 characters'),
-
-  check('authors.*.email')
-    .optional()
-    .isEmail().withMessage('Must be an e-mail')
-    .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 100 characters'),
-
-  check('observatories')
-    .optional()
-    .isArray().withMessage('Observatories must be an array')
-    .isLength({ min: 0, max: 100 }).withMessage('Must be not more than 100 items'),
-
-  check('observatories.*')
-    .optional()
-    .isObject().withMessage('Observatory must be an object')
-    .isLength({ min: 0, max: 1000 }).withMessage('Must be no longer than 1000 characters'),
 
   check('categories')
     .optional()
@@ -99,7 +85,7 @@ const telegramDataValidator = [
 
   check('categories.*')
     .optional()
-    .isString().withMessage('Categorie must be a string')
+    .isObject().withMessage('Category must be an object')
     .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 100 characters'),
 
   check('references')
@@ -109,7 +95,7 @@ const telegramDataValidator = [
 
   check('references.*')
     .optional()
-    .isString().withMessage('References must be a string')
+    .isString().withMessage('Reference must be a string')
     .isLength({ min: 0, max: 100 }).withMessage('Must be no longer than 100 characters'),
 
 ];
@@ -117,6 +103,9 @@ const telegramDataValidator = [
 const telegramRequiredFields = [
   check('title')
     .not().isEmpty().withMessage('Title is required'),
+
+  check('authors')
+    .not().isEmpty().withMessage('Authors are required'), 
 
   check('body')
     .not().isEmpty().withMessage('Body is required'),   

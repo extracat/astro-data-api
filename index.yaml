@@ -41,9 +41,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Telegram'
-              examples:
-                Array:
-                  $ref: '#/components/examples/TelegramArray'
+              #examples:
+              #  Array:
+              #    $ref: '#/components/examples/TelegramArray'
         404:
           $ref: '#/components/responses/404Notfound'
         500:
@@ -62,9 +62,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Telegram'
-            examples:
-              Object:
-                $ref: '#/components/examples/TelegramPost'
+            #examples:
+            #  Object:
+            #    $ref: '#/components/examples/TelegramPost'
       responses:
         201:
           description: Successful operation
@@ -101,9 +101,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Telegram'
-              examples:
-                Object:
-                  $ref: '#/components/examples/Telegram'
+              #examples:
+              #  Object:
+              #    $ref: '#/components/examples/Telegram'
         400:
           $ref: '#/components/responses/400BadRequest'
         404:
@@ -469,14 +469,6 @@ components:
         - exptime
         - instrument
         - filter
-      anyOf:
-      - required: 
-        - magnitude
-      - required: 
-        - upper_limit
-      - required:
-        - upper_limit
-        - magnitude
       properties:
         coordinates:
           $ref: '#/components/schemas/Coordinates'
@@ -498,6 +490,13 @@ components:
 
     UpperLimitsArea:
       type: object
+      required: 
+        - framae
+        - datetime
+        - exptime
+        - instrument
+        - filter
+        - upper_limit
       properties:
         framae:
           $ref: '#/components/schemas/Area'
@@ -546,16 +545,16 @@ components:
       description: This is a point on the sphere
       type: object
       required:
-      - RightAscension
-      - Declination
+      - right_ascension
+      - declination
       properties:
-        RightAscension:
+        right_ascension:
           allOf:
           - $ref: '#/components/schemas/Angle'
           minimum: 0.0
           maximum: 360.0
           exclusiveMaximum: True
-        Declination:
+        declination:
           allOf:
           - $ref: '#/components/schemas/Angle'
           minimum: -90.0
@@ -570,6 +569,10 @@ components:
 
     Coordinates:
       description: Coordinates with error (This is a spherical circle)
+      required:
+      - right_ascension
+      - declination
+      - error
       allOf:
       - $ref: '#/components/schemas/SPoint'
       properties:
