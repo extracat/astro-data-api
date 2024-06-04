@@ -20,7 +20,7 @@ const telegramDataValidator = [
   check('title')
     .optional()
     .isString().withMessage('Title must be a string')
-    .isLength({ min: 0, max: 1000 }).withMessage('Title must be no longer than 1000 characters'),
+    .isLength({ min: 0, max: 200 }).withMessage('Title must be no longer than 200 characters'),
 
   check('body')
     .optional()
@@ -30,7 +30,7 @@ const telegramDataValidator = [
   check('authors')
     .optional()
     .isString().withMessage('Authors must be a string')
-    .isLength({ min: 0, max: 100000 }).withMessage('Authors must be no longer than 100000 characters'),
+    .isLength({ min: 0, max: 10000 }).withMessage('Authors must be no longer than 10000 characters'),
 
   check('authors_list')
     .optional()
@@ -40,7 +40,7 @@ const telegramDataValidator = [
   check('authors_list.*')
     .optional()
     .isObject().withMessage('Author in authors list must be an object')
-    .isLength({ min: 0, max: 10000 }).withMessage('Must be no longer than 10000 characters'),
+    .isLength({ min: 0, max: 1000 }).withMessage('Must be no longer than 1000 characters'),
 
   check('event_datetime')
     .optional()
