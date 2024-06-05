@@ -587,10 +587,12 @@ components:
     ObjectId:
       description: The unique database ID (ObjectId)
       type: string
+      example: 6317b4f63f8aba7474aab97c
 
     AdnId:
       description: Human readable ID
       type: string
+      example: ADN220903A
 
     Tag:
       description: Tag or label

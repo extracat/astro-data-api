@@ -44,63 +44,103 @@ You've run local API server.
 
 ``` json
 {
-  "_id": "ObjectId",
-  "adn_id": "ADN231231A",
-  "timestamp": "2023-11-05T13:15:30Z",
-  "user_id": "ObjectId",
-  "external_id": "GCN #num | AT #num | ATel #num ...",
-  "title": "Title of telegram",
-  "body": "The main content (markdown)",
-  "event_datetime": "1994-11-05T13:15:30Z",
-  "band": "radio | ir | optical | uv | x-ray | gamma",
-  "coordinates": {
-    "ra": {
-      "value": "15:05:40.60",
-      "error": 0.5,
-      "error_units": "arcsec"
+  "_id": "string",
+  "adn_id": "string",
+  "user_id": "66127676f5c1f51ce9ffe440",
+  "timestamp": "2024-06-05T14:31:19.417Z",
+
+  "event_datetime": "2024-06-05T14:31:19.417Z",
+  "title": "Lorem Ipsum dolor sit amet",
+  "authors": "John Doe, Jane Doe (NASA)",
+  "authors_list": [
+    {
+      "_id": "66127676f5c1f51ce9ffe440",
+      "name": "John Doe",
+      "email": "john.doe@nasa.gov",
+      "org": "NASA"
     },
-    "dec": {
-      "value": "-54:54:24.2",
-      "error": 0.5,
-      "error_units": "arcsec"
+    {
+      "_id": "66127676f5c1f51ce9ffe440",
+      "name": "Jane Doe",
+      "email": "jane.doe@nasa.gov",
+      "org": "NASA"
     }
-  },
+  ],
+  "body": "At ipsum vitae est lacinia tincidunt. Maecenas elit orci,gravida ut, molestie non, venenatis vel, lorem. Sedlacinia. Suspendisse potenti. Sed ultricies cursuslectus. In id magna sit amet nibh suspicit euismod.Integer enim. Donec sapien ante, accumsan ut,sodales commodo, auctor quis, lacus. Maecenas a elitlacinia urna posuere sodales. Curabitur pede pede,molestie id, blandit vitae, varius ac, purus. Mauris atipsum vitae est lacinia tincidunt. Maecenas elit orci, gravida ut, molestie non, venenatis vel,lorem. Sed lacinia. Suspendisse potenti. Sed ultrucies cursus lectus.",
   "light_curve": [
     {
-      "datetime": "2023-01-01T00:00:00",
-      "magnitude": 5.0,
-      "upper_limit": 5.0,
-      "exptime": 180,
-      "filter": "blank | red | UV | H-a | O-III | S-II ..."
+      "coordinates": {
+        "right_ascension": 10.6845833,
+        "declination": 41.2691667,
+        "error": 3.167
+      },
+      "datetime": "2024-06-05T14:31:19.417Z",
+      "magnitude": 3.44,
+      "upper_limit": 17.9,
+      "exptime": 60,
+      "instrument": {
+        "_id": "66127676f8c9f51ce9ffe042",
+        "name": "MASTER-SAAO",
+        "instrument": "Robotic telescope",
+        "observation_mode": "Optical",
+        "observatory": {
+          "_id": "66127676f7c9f51ce9ffe540",
+          "name": "South African Astronomical Observatory",
+          "org": "National Research Foundation",
+          "country": "South Africa"
+        }
+      },
+      "filter": "C"
     }
   ],
-  "authors": [
+  "upper_limits": [
     {
-      "name": "John Doe",
-      "email": "astronomer@space.com",
-      "org": "Some Institution"
+      "framae": [
+        {
+          "right_ascension": 10,
+          "declination": 40
+        },
+        {
+          "right_ascension": 11,
+          "declination": 41
+        },
+        {
+          "right_ascension": 10,
+          "declination": 42
+        }
+      ],
+      "datetime": "2024-06-05T14:31:19.417Z",
+      "upper_limit": 17.6,
+      "exptime": 60,
+      "instrument": {
+        "_id": "66127676f8c9f51ce9ffe042",
+        "name": "MASTER-SAAO",
+        "instrument": "Robotic telescope",
+        "observation_mode": "Optical",
+        "observatory": {
+          "_id": "66127676f7c9f51ce9ffe540",
+          "name": "South African Astronomical Observatory",
+          "org": "National Research Foundation",
+          "country": "South Africa"
+        }
+      },
+      "filter": "C"
     }
   ],
-  "observatories": [
-    {
-      "name": "Some Observatory",
-      "instrument": "Wide Area Telescope",
-      "observation_mode": "Visible Light"
-    }
-  ],
+  "band": "Optical",
   "categories": [
-    "MASTER-Net",
-    "Gamma Burst",
-    "X-ray",
-    "Some other tag"
+    {
+      "_id": "66127676f8c9f11ce0ffe042",
+      "text": "galaxy",
+      "color": "blue"
+    }
   ],
   "references": [
-    "ADN221231",
-    "ADN211020",
-    "ADN200222"
+    "ADN220903",
+    "10.1109/5.771073",
+    "GCN 36060"
   ]
 }
-
 ```
 
 ### User
