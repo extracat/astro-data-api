@@ -44,8 +44,6 @@ paths:
               #examples:
               #  Array:
               #    $ref: '#/components/examples/TelegramArray'
-        404:
-          $ref: '#/components/responses/404Notfound'
         500:
           $ref: '#/components/responses/500ServerError'
 
@@ -208,8 +206,6 @@ paths:
               examples:
                 Array:
                   $ref: '#/components/examples/MockObjectArray'
-        404:
-          $ref: '#/components/responses/404Notfound'
         500:
           $ref: '#/components/responses/500ServerError'
 
