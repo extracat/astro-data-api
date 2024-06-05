@@ -33,7 +33,10 @@ module.exports.findOne = async function (query) {
 
 module.exports.insert = async function (data) { 
   try {
-    const result = { ...object, ...data };
+    const result = {
+        acknowledged: true,
+        insertedId: object._id
+    };
     return await result;
   } catch (error) {
     console.error("Controller Error: ", error);
@@ -43,7 +46,11 @@ module.exports.insert = async function (data) {
 
 module.exports.delete = async function (query) { 
   try {
-    return await object;
+    const result = {
+      acknowledged: true,
+      deletedCount: 1
+    };
+    return await result;  
   } catch (error) {
     console.error("Controller Error: ", error);
     throw error;
@@ -53,7 +60,13 @@ module.exports.delete = async function (query) {
 module.exports.update = async function (query, data) { 
   try {
     object._id = query;
-    const result = { ...object, ...data };
+    const result = {
+      acknowledged: true,
+      modifiedCount: 1,
+      upsertedId: null,
+      upsertedCount: 0,
+      matchedCount: 1
+    };
     return await result;  
   } catch (error) {
     console.error("Controller Error: ", error);

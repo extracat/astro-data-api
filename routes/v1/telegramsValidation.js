@@ -63,15 +63,15 @@ const telegramDataValidator = [
   
   check('light_curve.*.coordinates.right_ascension').if(body('light_curve.*.coordinates').exists())
     .exists().withMessage('Coordinate RA is required')
-    .isString().withMessage('Coordinate RA must be a string'),
+    .isDecimal().withMessage('Coordinate RA must be decimal (degrees)'),
 
   check('light_curve.*.coordinates.declination').if(body('light_curve.*.coordinates').exists())
     .exists().withMessage('Coordinate DEC is required')
-    .isString().withMessage('Coordinate DEC must be a string'),
+    .isDecimal().withMessage('Coordinate DEC must be decimal (degrees)'),
 
   check('light_curve.*.coordinates.error').if(body('light_curve.*.coordinates').exists())
-      .exists().withMessage('Coordinate error is required')
-      .isString().withMessage('Coordinate error must be a string'),
+    .exists().withMessage('Coordinate error is required')
+    .isDecimal().withMessage('Coordinate error must be decimal (degrees)'),
 
   check('light_curve.*.datetime')
     .optional()
