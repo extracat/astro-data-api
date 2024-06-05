@@ -69,7 +69,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Telegram'
+                $ref: '#/components/schemas/MongoResponse'
         400:
           $ref: '#/components/responses/400BadRequest'
         401:
@@ -713,6 +713,24 @@ components:
         message:
           description: A human readable error message
           type: string
+
+    MongoResponse:
+      type: object
+      properties:
+        acknowledged:
+          type: boolean
+        insertedId:
+          type: string
+        modifiedCount: 
+          type: integer
+        upsertedId: 
+          type: string
+        upsertedCount: 
+          type: integer
+        matchedCount: 
+          type: integer
+        deletedCount: 
+          type: integer
 
   responses:
 
