@@ -626,8 +626,6 @@ components:
           $ref: '#/components/schemas/ObjectId'
         name:
           type: string
-        instrument:
-          type: string
         observation_mode:
           type: string
         observatory:

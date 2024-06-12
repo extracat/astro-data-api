@@ -115,7 +115,6 @@ You've run local API server.
       "instrument": {
         "_id": "66127676f8c9f51ce9ffe042",
         "name": "MASTER-SAAO",
-        "instrument": "Robotic telescope",
         "observation_mode": "Optical",
         "observatory": {
           "_id": "66127676f7c9f51ce9ffe540",
