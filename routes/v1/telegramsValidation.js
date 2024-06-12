@@ -2,15 +2,15 @@ const { check, param, body } = require('express-validator');
 const { validationResult } = require('express-validator');
 
 const allowedFields = [
-  'event_datetime', //
-  'title',          //
-  'authors',        //
+  'event_datetime',
+  'title',
+  'authors',
   'authors_list',
-  'body',           //
+  'body',
   'light_curve',
   'upper_limits',
-  'band',           //
-  'categories',     //
+  'band',
+  'categories',
   'references'
 ];
 
@@ -54,7 +54,7 @@ const telegramDataValidator = [
   check('light_curve.*')
     .optional()
     .isObject().withMessage('Light curve measurment must be an object')
-    .isLength({ min: 0, max: 10000 }).withMessage('Must be no longer than 1000 characters'),
+    .isLength({ min: 0, max: 10000 }).withMessage('Must be no longer than 10000 characters'),
 
   check('light_curve.*.coordinates').if(body('light_curve.*').exists())
     .exists().withMessage('Coordinates are required')
@@ -74,7 +74,7 @@ const telegramDataValidator = [
     .isDecimal().withMessage('Coordinate error must be decimal (degrees)'),
 
   check('light_curve.*.datetime')
-    .optional()
+    .exists().withMessage('Datetime in light curve is required')
     .isISO8601().withMessage('Light curve measurment datetime must be a valid ISO 8601 date string'),
 
 
