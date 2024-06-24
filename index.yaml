@@ -1,13 +1,13 @@
 openapi: 3.0.0
 info:
-  version: 1.3.0
+  version: 1.3.1
   title: Astro Data API
   description: Send and receive telegrams about observations of astronomical events.
 
 servers:
   - url: https://api.astrodatanet.org/api/v1
     description: Main API server
-  - url: https://astro-data-api-git-develop-extracat-projects.vercel.app/api/v1
+  - url: https://dev.api.astrodatanet.org/api/v1
     description: Develop API server
   - url: http://localhost:8080/api/v1
     description: Localhost API server
