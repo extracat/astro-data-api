@@ -1,20 +1,22 @@
 const { ObjectId } = require('mongodb');
 
-const object = {
-  _id: new ObjectId(),
-  name: "Object name"
+class MockObject {
+  constructor(name = "Object name") {
+    this._id = new ObjectId();
+    this.name = name;
+  }
 }
-
 
 ///////////////////////////////////
 
 module.exports.find = async function () { 
   try {
 
-    const object1 = object;
-    const object2 = object;
+    const object1 = new MockObject();
+    const object2 = new MockObject();
+    const object3 = new MockObject();
     
-    return await [object1, object2];
+    return await [object1, object2, object3];
   } catch (error) {
     console.error("Controller Error: ", error);
     throw error;
@@ -23,6 +25,7 @@ module.exports.find = async function () {
 
 module.exports.findOne = async function (query) { 
   try {
+    const object = new MockObject();
     object._id = query;
     return await object;
   } catch (error) {
@@ -33,6 +36,7 @@ module.exports.findOne = async function (query) {
 
 module.exports.insert = async function (data) { 
   try {
+    const object = new MockObject(data.name);
     const result = {
         acknowledged: true,
         insertedId: object._id
@@ -59,6 +63,7 @@ module.exports.delete = async function (query) {
 
 module.exports.update = async function (query, data) { 
   try {
+    const object = new MockObject(data.name);
     object._id = query;
     const result = {
       acknowledged: true,
