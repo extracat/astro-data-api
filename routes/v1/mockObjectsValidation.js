@@ -18,8 +18,9 @@ const mockObjectsDataValidator = [
 
 const mockObjectsRequiredFields = [
   check('name')
-    .not().isEmpty().withMessage('Name is required')
-
+    .not().isEmpty().withMessage('Name is required'),
+  check('band')
+    .not().isEmpty().withMessage('Band is required')
 ];
 
 const mockObjectsIdValidator = [
