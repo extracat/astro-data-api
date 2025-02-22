@@ -149,13 +149,22 @@ exports.validationErrorHandler = function validationErrorHandler(req, res, next)
   // Check if all fields are allowed
   const invalidFields = Object.keys(req.body).filter(field => !allowedFields.includes(field));
   if (invalidFields.length > 0) {
-    return res.status(400).json({ errors: `Invalid field(s): ${invalidFields.join(', ')}` });
+    return res.status(400).json({ 
+      status: 'error',
+      code: 400,
+      message: `Invalid field(s): ${invalidFields.join(', ')}` 
+    });
   }
+
 
   // Return error id validation fails
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ 
+      status: 'error',
+      code: 400,
+      errors: errors.array() 
+    });
   }
   
   next();
